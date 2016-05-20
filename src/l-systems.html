@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>L-systems</title>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+    <header>
+        <h1>L-system manager</h1>
+    </header>
+
+    <main>
+        <canvas data-ls-id="canvas" moz-opaque></canvas>
+
+        <form action="#" class="ls-panel" data-ls-id="collections.panels" autocomplete="off">
+            <fieldset>
+                <legend>Collections</legend>
+                <select data-ls-id="collection" title="Select a collection">
+                    <option value="-">—</option>
+                </select>
+                <select data-ls-id="lSystems" title="Select an L-system" size="5" multiple>
+                    <option value="-">—</option>
+                </select>
+                <p class="ls-note">Double click (or press Enter) to select L-system. Hold Ctrl key to plot</p>
+            </fieldset>
+
+            <fieldset>
+                <legend>Manage collections</legend>
+                <button data-ls-id="createColl">Create collection…</button>
+                <button data-ls-id="deleteColl">Delete collection</button>
+                <button data-ls-id="addLS">Add to collection…</button>
+                <button data-ls-id="removeLS">Remove from collection</button>
+            </fieldset>
+        </form>
+
+        <form action="#" class="ls-panel" data-ls-id="settings.panels" autocomplete="off">
+            <label data-mark="Ax"><input type="text" data-ls-id="axiom" placeholder="Axiom" title="Axiom"></label>
+            <fieldset class="ls-rules">
+                <legend>Production rules</legend>
+                <label data-mark="F"><input type="text" data-ls-id="ruleF"></label>
+                <label data-mark="B"><input type="text" data-ls-id="ruleB"></label>
+                <button data-ls-id="addRule">Add a rule</button>
+            </fieldset>
+            <label data-mark="α"><input type="text" data-ls-id="alpha" placeholder="Initial angle α, deg." title="Initial angle α, deg."></label>
+            <label data-mark="θ"><input type="text" data-ls-id="theta" placeholder="Angle increment θ, deg." title="Angle increment θ, deg." /></label>
+            <label data-mark="S"><input type="text" data-ls-id="step" placeholder="Step" title="Step"></label>
+            <label data-mark="N"><input type="number" data-ls-id="iterCount" placeholder="Iteration count" title="Iteration count" min="1"></label>
+            <button type="submit" data-ls-id="plot">Plot</button>
+        </form>
+
+        <form action="#" class="ls-panel" data-ls-id="appearance.panels" autocomplete="off">
+            <label>FG <input type="color" value="#008000" data-ls-id="fgClr" title="Line color"></label>
+            <label>BG <input type="color" value="#ffffff" data-ls-id="bgClr" title="Background color"></label>
+        </form>
+
+        <form action="#" class="ls-panel" data-ls-id="exporting.panels" autocomplete="off">
+            <a href="#" data-ls-id="export" target="_blank" download="l-system.png">Export to PNG…</a>
+            <button data-ls-id="makeLink">Generate a link</button>
+            <textarea data-ls-id="link" cols="20" rows="3" title="Hyperlink for the current L-system" readonly></textarea>
+        </form>
+
+        <form class="ls-tabs" data-ls-id="tabs">
+            <fieldset>
+                <button type="button" data-ls-ref="collections">Collections</button>
+                <button type="button" data-ls-ref="settings">Settings</button>
+                <button type="button" data-ls-ref="appearance">Appearance</button>
+                <button type="button" data-ls-ref="exporting">Exporting</button>
+            </fieldset>
+        </form>
+    </main>
+
+    <footer>
+        <a href="https://github.com/Amphiluke/l-systems">Project on GitHub <img src="img/gh-mark.png" alt="" width="32" height="32"></a><br>
+        © 2012–2016, Amphiluke
+    </footer>
+
+    <script src="../node_modules/systemjs/dist/system.js"></script>
+    <script>
+        System.config({baseURL: "./js"});
+        System.import("index.sys.js");
+    </script>
+</body>
+</html>
