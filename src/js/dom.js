@@ -4,7 +4,7 @@ let dom = {
     cache(el, lsId) {
         let index = lsId.indexOf(".");
         if (index >= 0) {
-            let groupName = "." + lsId.slice(index + 1);
+            let groupName = lsId.slice(index);
             let group = this.ui.get(groupName);
             if (!group) {
                 group = new Map();
@@ -14,6 +14,11 @@ let dom = {
         } else {
             this.ui.set(lsId, el);
         }
+    },
+    
+    // Use this to search non-cached dynamic elements
+    getElementByLSID(lsId, context = document.body) {
+        return context.querySelector(`[data-ls-id="${lsId}"]`);
     }
 };
 

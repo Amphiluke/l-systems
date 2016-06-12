@@ -1,5 +1,7 @@
 .idea
 node_modules
 
+npm-debug.log
+
 src/js/**/*.sys.js
 src/css/**/*.css

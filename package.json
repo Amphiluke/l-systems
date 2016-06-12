@@ -1,11 +1,12 @@
 {
   "name": "l-systems",
-  "version": "1.0.0",
+  "version": "2.0.0-alpha",
   "description": "A simple canvas-based L-system generator and manager",
   "main": "src/js/index.js",
   "scripts": {
     "postinstall": "gulp prepare",
     "transpile": "gulp transpile",
+    "lint": "eslint src/js/**/*.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -29,6 +30,7 @@
   },
   "devDependencies": {
     "babel-plugin-transform-es2015-modules-systemjs": "^6.9.0",
+    "eslint": "^2.12.0",
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
     "gulp-less": "^3.1.0",

@@ -7,10 +7,6 @@
 </head>
 <body>
 
-    <header>
-        <h1>L-system manager</h1>
-    </header>
-
     <main>
         <canvas data-ls-id="canvas" moz-opaque></canvas>
 
@@ -28,10 +24,10 @@
 
             <fieldset>
                 <legend>Manage collections</legend>
-                <button data-ls-id="createColl">Create collection…</button>
-                <button data-ls-id="deleteColl">Delete collection</button>
-                <button data-ls-id="addLS">Add to collection…</button>
-                <button data-ls-id="removeLS">Remove from collection</button>
+                <button type="button" data-ls-id="createColl">Create collection…</button>
+                <button type="button" data-ls-id="deleteColl">Delete collection</button>
+                <button type="button" data-ls-id="addLS">Add to collection…</button>
+                <button type="button" data-ls-id="removeLS">Remove from collection</button>
             </fieldset>
         </form>
 
@@ -39,9 +35,12 @@
             <label data-mark="Ax"><input type="text" data-ls-id="axiom" placeholder="Axiom" title="Axiom"></label>
             <fieldset class="ls-rules">
                 <legend>Production rules</legend>
-                <label data-mark="F"><input type="text" data-ls-id="ruleF"></label>
-                <label data-mark="B"><input type="text" data-ls-id="ruleB"></label>
-                <button data-ls-id="addRule">Add a rule</button>
+                <label data-mark="F"><input type="text" data-ls-id="ruleF" placeholder="Forward w/ drawing"></label>
+                <label data-mark="B"><input type="text" data-ls-id="ruleB" placeholder="Forward w/o drawing"></label>
+                <script type="text/template" data-ls-id="ruleTpl">
+                    <label data-mark="${letter}"><input type="text" data-ls-id="rule${letter}" value="${letter}"></label>
+                </script>
+                <button type="button" data-ls-id="addRule">Add a rule</button>
             </fieldset>
             <label data-mark="α"><input type="text" data-ls-id="alpha" placeholder="Initial angle α, deg." title="Initial angle α, deg."></label>
             <label data-mark="θ"><input type="text" data-ls-id="theta" placeholder="Angle increment θ, deg." title="Angle increment θ, deg." /></label>
@@ -57,7 +56,7 @@
 
         <form action="#" class="ls-panel" data-ls-id="exporting.panels" autocomplete="off">
             <a href="#" data-ls-id="export" target="_blank" download="l-system.png">Export to PNG…</a>
-            <button data-ls-id="makeLink">Generate a link</button>
+            <button type="button" data-ls-id="makeLink">Generate a link</button>
             <textarea data-ls-id="link" cols="20" rows="3" title="Hyperlink for the current L-system" readonly></textarea>
         </form>
 
@@ -72,8 +71,9 @@
     </main>
 
     <footer>
-        <a href="https://github.com/Amphiluke/l-systems">Project on GitHub <img src="img/gh-mark.png" alt="" width="32" height="32"></a><br>
-        © 2012–2016, Amphiluke
+        L-system plotter &amp; manager by Amphiluke<br>
+        <a href="https://github.com/Amphiluke/l-systems" target="_blank">Project on GitHub <img src="img/gh-mark.png" alt="" width="32" height="32"></a><br>
+        © 2012–2016
     </footer>
 
     <script src="../node_modules/systemjs/dist/system.js"></script>

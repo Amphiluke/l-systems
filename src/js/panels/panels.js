@@ -1,4 +1,4 @@
-import dom from "./dom.js";
+import dom from "../dom.js";
 
 let openedPanel = [...dom.ui.get(".panels").values()]
     .find(el => el.classList.contains("ls-panel-open"));

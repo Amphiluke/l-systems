@@ -4,17 +4,45 @@ body {
     font:92%/1.25 Arial,sans-serif;
 }
 
-header,
-footer {
-    padding:0 10px 0 35px;
-}
-
-main {
-    padding:0 0 0 25px;
-}
-
 button {
     cursor:pointer;
 }
 
+main {
+    position:fixed;
+    bottom:0;
+    left:25px;
+    right:0;
+    top:0;
+}
+
+canvas {
+    height:100%;
+    width:100%;
+}
+
+footer {
+    bottom:15px;
+    font-size:0.75em;
+    line-height:1;
+    position:fixed;
+    right:15px;
+    text-shadow:1px 1px 1px #fff;
+
+    a {
+        color:inherit;
+        text-decoration:none;
+        img {
+            background:fade(#fff, 50%);
+            border-radius:50%;
+            box-shadow:0 0 1px 0 #fff;
+            height:20px;
+            margin-left:0.75em;
+            vertical-align:middle;
+            width:20px;
+        }
+    }
+}
+
 @import "panel";
+@import "settings";
