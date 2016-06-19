@@ -2,9 +2,9 @@ let ruleRE = /^[A-Z\+\-\[\]]+$/;
 
 let validator = {
     messages: {
-        AXIOM: "The axiom may contain only the following characters: A-Z, +, -, [, ]",
-        RULE: "Production rules may contain only the following characters: A-Z, +, -, [, ]",
-        LETTER: "The allowed alphabet letters are: A-Z",
+        AXIOM: "The axiom may contain only the following characters: “A”-Z”, “+”, “-”, “[”, “]”",
+        RULE: "Production rules may may contain only the following characters: “A”-Z”, “+”, “-”, “[”, “]”",
+        LETTER: "The allowed alphabet letters are: “A”-“Z”",
         ALPHA: "The “alpha” parameter must be a finite number",
         THETA: "The “theta” parameter must be a finite number",
         STEP: "The “step” parameter must be a positive finite number",

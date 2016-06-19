@@ -1,6 +1,6 @@
 import validator from "./validator.js";
 
-const ctrlRuleList = [["+", "+"], ["-", "-"], ["[", "["], ["]", "]"]];
+const ctrlRuleList = [["F", "F"], ["B", "B"], ["+", "+"], ["-", "-"], ["[", "["], ["]", "]"]];
 
 const defaults = {
     alpha: 0,
@@ -96,7 +96,11 @@ let ls = {
         productions.forEach(this.setRule, this);
     },
     deleteRule(letter) {
-        rules.delete(letter);
+        if (letter !== "F" && letter !== "B" && rules.has(letter)) {
+            rules.delete(letter);
+            return true;
+        }
+        return false;
     },
 
     get vacantLetters() {
