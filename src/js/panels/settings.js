@@ -1,5 +1,6 @@
 import dom from "../dom.js";
 import ls from "../ls.js";
+import plotter from "../plotter.js";
 
 let panel = dom.ui.get(".panels").get("settings");
 let popup = dom.ui.get("letterPopup");
@@ -105,12 +106,12 @@ let handlers = {
     clickPlot(e) {
         e.preventDefault();
         let ruleFields = [...rulesBlock.querySelectorAll("input[data-letter]")];
-        let rules = new Map(ruleFields.map(field => [field.value.toUpperCase(), field.dataset.letter]));
+        let rules = new Map(ruleFields.map(field => [field.dataset.letter, field.value.toUpperCase()]));
         try {
             ls.reset();
             ls.axiom = dom.ui.get("axiom").value.toUpperCase();
-            ls.alpha = Number(dom.ui.get("alpha").value);
-            ls.theta = Number(dom.ui.get("theta").value);
+            ls.alpha = -dom.ui.get("alpha").value * Math.PI / 180;
+            ls.theta = dom.ui.get("theta").value * Math.PI / 180;
             ls.step = Number(dom.ui.get("step").value);
             ls.iterCount = Number(dom.ui.get("iterCount").value);
             ls.setRules(rules);
@@ -118,7 +119,7 @@ let handlers = {
             alert(ex.message);
             return;
         }
-        // draw...
+        plotter.plot();
     }
 };
 

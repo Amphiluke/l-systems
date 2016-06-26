@@ -115,11 +115,11 @@ let ls = {
     },
 
     getCode() {
-        let code = settings.axiom;
+        let code = axiom;
         for (let count = settings.iterCount; count > 0; count--) {
             let newCode = "";
             for (let letter of code) {
-                newCode += rules[letter] || "";
+                newCode += rules.get(letter) || "";
             }
             code = newCode;
         }
