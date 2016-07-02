@@ -1,6 +1,7 @@
 import dom from "../dom.js";
 import ls from "../ls.js";
 import plotter from "../plotter.js";
+import channel from "../channel.js";
 
 let panel = dom.ui.get(".panels").get("settings");
 let popup = dom.ui.get("letterPopup");
@@ -23,7 +24,7 @@ let ruleCtrl = {
         if (!letter) {
             return;
         }
-        let html = ruleCtrl.tpl.innerHTML.replace(/\$\{letter\}/g, letter);
+        let html = ruleCtrl.tpl.innerHTML.replace(/\$\{(?:letter|rule)\}/g, letter);
         beforeEl.insertAdjacentHTML("beforebegin", html);
         ls.setRule(letter, letter);
         let input = rulesBlock.querySelector(`input[data-letter="${letter}"]`);
@@ -39,6 +40,20 @@ let ruleCtrl = {
             label.dataset.mark = newLetter;
             input.dataset.letter = newLetter;
             input.focus();
+        }
+    },
+
+    sync() {
+        let labels = rulesBlock.querySelectorAll("[data-mark]:not([data-mark='F']):not([data-mark='B'])");
+        [...labels].forEach(label => label.parentNode.removeChild(label));
+        let template = ruleCtrl.tpl.innerHTML;
+        for (let [letter, rule] of ls.rules) {
+            if (letter === "F" || letter === "B") {
+                rulesBlock.querySelector(`input[data-letter="${letter}"]`).value = rule;
+            } else {
+                let html = template.replace(/\$\{letter\}/g, letter).replace(/\$\{rule\}/g, rule);
+                ruleCtrl.tpl.insertAdjacentHTML("beforebegin", html);
+            }
         }
     }
 };
@@ -120,6 +135,15 @@ let handlers = {
             return;
         }
         plotter.plot();
+    },
+
+    syncLSystem() {
+        dom.ui.get("axiom").value = ls.axiom;
+        dom.ui.get("alpha").value = (-ls.alpha * 180 / Math.PI).toFixed(3);
+        dom.ui.get("theta").value = (ls.theta * 180 / Math.PI).toFixed(3);
+        dom.ui.get("step").value = ls.step;
+        dom.ui.get("iterCount").value = ls.iterCount;
+        ruleCtrl.sync();
     }
 };
 
@@ -135,3 +159,5 @@ rulesBlock.addEventListener("keydown", e => {
 rulesBlock.addEventListener("click", handlers.clickRuleLetter);
 popup.addEventListener("click", handlers.clickPopupBtn);
 dom.ui.get("plot").addEventListener("click", handlers.clickPlot);
+
+channel.subscribe("LSystemConfigured", handlers.syncLSystem);

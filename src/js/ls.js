@@ -1,6 +1,6 @@
 import validator from "./validator.js";
 
-const ctrlRuleList = [["F", "F"], ["B", "B"], ["+", "+"], ["-", "-"], ["[", "["], ["]", "]"]];
+const ctrlRuleList = [["F", ""], ["B", ""], ["+", "+"], ["-", "-"], ["[", "["], ["]", "]"]];
 
 const defaults = {
     alpha: 0,
@@ -79,7 +79,8 @@ let ls = {
 
     // Productions for each symbol in the axiom
     get rules() {
-        return new Map([...rules]);
+        let ruleList = [...rules].filter(([key]) => key >= "A" && key <= "Z");
+        return new Map(ruleList);
     },
     setRule(production, letter) {
         let status = validator.checkLetter(letter);

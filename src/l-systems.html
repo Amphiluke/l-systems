@@ -10,24 +10,23 @@
     <main>
         <canvas data-ls-id="canvas" moz-opaque></canvas>
 
-        <form action="#" class="ls-panel" data-ls-id="collections.panels" autocomplete="off">
+        <form action="#" class="ls-panel ls-panel-collections" data-ls-id="collections.panels" autocomplete="off">
             <fieldset>
                 <legend>Collections</legend>
-                <select data-ls-id="collection" title="Select a collection">
+                <select data-ls-id="collections" title="Select a collection">
                     <option value="-">—</option>
                 </select>
+                <button type="button" data-ls-id="deleteColl" title="Delete collection" disabled>✗</button>
                 <select data-ls-id="lSystems" title="Select an L-system" size="5" multiple>
                     <option value="-">—</option>
                 </select>
-                <p class="ls-note">Double click (or press Enter) to select L-system. Hold Ctrl key to plot</p>
+                <p class="ls-note">Double click (or press Enter) to explore L-system. Press Spacebar to plot</p>
             </fieldset>
 
             <fieldset>
                 <legend>Manage collections</legend>
-                <button type="button" data-ls-id="createColl">Create collection…</button>
-                <button type="button" data-ls-id="deleteColl">Delete collection</button>
-                <button type="button" data-ls-id="addLS">Add to collection…</button>
-                <button type="button" data-ls-id="removeLS">Remove from collection</button>
+                <button type="button" data-ls-id="addLS" disabled>Add to collection…</button>
+                <button type="button" data-ls-id="removeLS" disabled>Remove from collection</button>
                 <hr>
                 <input type="file" title="Import collection">
                 <a href="#" data-ls-id="exportColl" download="collection.json">Export collection…</a>
@@ -41,7 +40,7 @@
                 <label data-mark="F"><input type="text" data-letter="F" placeholder="Forward w/ drawing" title="Forward w/ drawing" pattern="[A-Za-z\+\-\[\]]+"></label>
                 <label data-mark="B"><input type="text" data-letter="B" placeholder="Forward w/o drawing" title="Forward w/o drawing" pattern="[A-Za-z\+\-\[\]]+"></label>
                 <script type="text/template" data-ls-id="ruleTpl">
-                    <label data-mark="${letter}"><input type="text" data-letter="${letter}" value="${letter}" pattern="[A-Za-z\+\-\[\]]+"></label>
+                    <label data-mark="${letter}"><input type="text" data-letter="${letter}" value="${rule}" pattern="[A-Za-z\+\-\[\]]+"></label>
                 </script>
                 <button type="button" data-ls-id="addRule">Add a rule</button>
                 <div class="ls-letter-popup" data-ls-id="letterPopup">

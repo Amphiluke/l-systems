@@ -1,4 +1,7 @@
 import dom from "../dom.js";
+import channel from "../channel.js";
+import "./collections.js";
+import "./settings.js";
 
 let openedPanel = [...dom.ui.get(".panels").values()]
     .find(el => el.classList.contains("ls-panel-open"));
@@ -33,6 +36,10 @@ dom.ui.get("tabs").addEventListener("click", e => {
     if (ref) {
         panels.show(ref, true);
     }
+});
+
+channel.subscribe("LSystemConfigured", () => {
+    panels.show("settings");
 });
 
 export default panels;

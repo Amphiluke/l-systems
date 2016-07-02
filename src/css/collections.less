@@ -1,0 +1,15 @@
+.ls-panel-collections {
+    [data-ls-id="deleteColl"] {
+        color:#b00;
+        float:right;
+        padding-left:0;
+        padding-right:0;
+        width:25px;
+        &[disabled] {
+            color:#808080;
+        }
+    }
+    [data-ls-id="collections"] {
+        width:~"calc(100% - 25px - 5px)";
+    }
+}
