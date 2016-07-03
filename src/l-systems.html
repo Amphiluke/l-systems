@@ -16,7 +16,10 @@
                 <select data-ls-id="collections" title="Select a collection">
                     <option value="-">—</option>
                 </select>
-                <button type="button" data-ls-id="deleteColl" title="Delete collection" disabled>✗</button>
+                <span class="ls-collection-list-btns">
+                    <button type="button" data-ls-id="createColl" title="Create a new collection">+</button>
+                    <button type="button" data-ls-id="deleteColl" title="Delete collection" disabled>✗</button>
+                </span>
                 <select data-ls-id="lSystems" title="Select an L-system" size="5" multiple>
                     <option value="-">—</option>
                 </select>
@@ -25,10 +28,10 @@
 
             <fieldset>
                 <legend>Manage collections</legend>
-                <button type="button" data-ls-id="addLS" disabled>Add to collection…</button>
-                <button type="button" data-ls-id="removeLS" disabled>Remove from collection</button>
+                <button type="button" data-ls-id="addLS" title="Add current L-system to the selected collection" disabled>Add to collection…</button>
+                <button type="button" data-ls-id="removeLS" title="Remove the selected L-system from the collection" disabled>Remove from collection</button>
                 <hr>
-                <input type="file" title="Import collection">
+                <label class="ls-import-coll">Import collection…<input type="file" data-ls-id="importColl" accept=".json"></label>
                 <a href="#" data-ls-id="exportColl" download="collection.json">Export collection…</a>
             </fieldset>
         </form>

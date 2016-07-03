@@ -1,15 +1,48 @@
-.ls-panel-collections {
-    [data-ls-id="deleteColl"] {
-        color:#b00;
-        float:right;
-        padding-left:0;
-        padding-right:0;
-        width:25px;
-        &[disabled] {
-            color:#808080;
+.ls-collection-list-btns {
+    float:right;
+    width:50px;
+    button {
+        float:left;
+        padding:0;
+        white-space:nowrap;
+        width:48.5%;
+        &:first-child {
+            margin-right:3%;
         }
     }
-    [data-ls-id="collections"] {
-        width:~"calc(100% - 25px - 5px)";
+}
+[data-ls-id="deleteColl"]:not([disabled]) {
+    color:#b00;
+}
+.ls-panel-collections [data-ls-id="collections"] {
+    width:~"calc(100% - 50px - 5px)";
+}
+.ls-import-coll {
+    color:#060;
+    cursor:pointer;
+    display:block;
+    position:relative;
+    text-decoration:underline;
+    width:100%;
+    input[type="file"] {
+        cursor:pointer;
+        left:0;
+        opacity:0.01;
+        position:absolute;
+        top:0;
+        width:100%;
+    }
+}
+[data-ls-id="exportColl"] {
+    display:inline-block;
+    margin:0.5em 0;
+}
+
+.ls-panel-collections {
+    .ls-note {
+        color:#999;
+        font-size:0.8em;
+        line-height:1.1;
+        margin:0;
     }
 }

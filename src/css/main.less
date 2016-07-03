@@ -4,8 +4,17 @@ body {
     font:92%/1.25 Arial,sans-serif;
 }
 
-button:not([disabled]) {
-    cursor:pointer;
+a {
+    color:#060;
+}
+
+button{
+    &[disabled] {
+        cursor:not-allowed;
+    }
+    &:not([disabled]) {
+        cursor:pointer;
+    }
 }
 
 canvas {
@@ -40,5 +49,3 @@ footer {
 }
 
 @import "panel";
-@import "settings";
-@import "collections";

@@ -6,40 +6,44 @@ import plotter from "../plotter.js";
 let bank = new Map();
 
 let collectionCtrl = {
-    current: null, // currently selected collection name
+    get current() {
+        return dom.ui.get("collections").value;
+    },
+    set current(name) {
+        dom.ui.get("collections").value = name;
+        collectionCtrl.fillLSystemList();
+        collectionCtrl.updateControlStates();
+    },
 
     fillBank(collections) {
-        for (let collName of Object.keys(collections)) {
-            let items = collections[collName];
-            let collection = new Map();
-            bank.set(collName, collection);
-            for (let itemName of Object.keys(items)) {
-                let params = items[itemName];
-                params.rules = new Map(Object.keys(params.rules).map(letter => [letter, params.rules[letter]]));
-                collection.set(itemName, params);
+        dom.ui.get("collections").length = 0;
+        for (let collName of Object.keys(collections).sort()) {
+            collectionCtrl.add(collName, collections[collName], false);
+        }
+    },
+
+    stringify(collection = collectionCtrl.current) {
+        let list = {};
+        for (let [name, params] of bank.get(collection)) {
+            let data = list[name] = {rules: {}};
+            ({axiom: data.axiom, alpha: data.alpha, theta: data.theta, iterCount: data.iterCount, step: data.step} = params);
+            for (let [letter, rule] of params.rules) {
+                data.rules[letter] = rule;
             }
         }
+        return JSON.stringify(list, null, 2);
     },
 
-    fillCollectionList() {
-        let html = "";
-        for (let name of bank.keys()) {
-            html += `<option>${name}</option>`;
-        }
-        html += "<option value=''>Add…</option>";
-        dom.ui.get("collections").innerHTML = html;
-    },
-
-    fillLSystemList(collection) {
+    fillLSystemList(collection = collectionCtrl.current) {
         let html = "";
         for (let name of bank.get(collection).keys()) {
             html += `<option>${name}</option>`;
         }
         let select = dom.ui.get("lSystems");
         select.innerHTML = html;
-        collectionCtrl.current = collection;
+        select.selectedIndex = 0;
     },
-    
+
     setupLSystem(name, collection = collectionCtrl.current) {
         let params = bank.get(collection).get(name);
         if (!params) {
@@ -55,30 +59,45 @@ let collectionCtrl = {
     },
     
     create(name) {
-        let i = 2;
-        let validName = name;
-        while (bank.has(validName)) {
-            validName = `${name} (${i++})`;
-        }
+        name = collectionCtrl._getValidName(name, bank);
         let collection = new Map();
         // User defined collections are editable in contrast to built in collections.
         // So we need an attribute to distinct these two types of collections
         collection.userDefined = true;
-        bank.set(validName, collection);
+        bank.set(name, collection);
         let option = document.createElement("option");
-        option.text = validName;
-        let select = dom.ui.get("collections");
-        select.add(option, select.length - 1);
-        select.value = validName;
-        dom.ui.get("lSystems").length = 0;
-        collectionCtrl.current = validName;
+        option.text = name;
+        dom.ui.get("collections").add(option);
+        collectionCtrl.current = name;
     },
 
-    delete(collection) {
+    add(name, lSystems, userDefined = true) {
+        name = collectionCtrl._getValidName(name, bank);
+        let collection = new Map();
+        // User defined collections are editable in contrast to built in collections.
+        // So we need an attribute to distinct these two types of collections
+        collection.userDefined = userDefined;
+        bank.set(name, collection);
+        for (let itemName of Object.keys(lSystems).sort()) {
+            let params = lSystems[itemName];
+            params.rules = new Map(Object.keys(params.rules).map(letter => [letter, params.rules[letter]]));
+            collection.set(itemName, params);
+        }
+        let option = document.createElement("option");
+        option.text = name;
+        dom.ui.get("collections").add(option);
+    },
+
+    delete(collection = collectionCtrl.current) {
         if (!collectionCtrl.isUserDefined(collection)) {
             throw new Error("Built in collection cannot be deleted");
         }
         bank.delete(collection);
+        if (collection === collectionCtrl.current) {
+            collectionCtrl.current = bank.keys().next().value;
+        }
+        let select = dom.ui.get("collections");
+        select.removeChild([...select.options].find(option => option.text === collection));
     },
 
     isUserDefined(collection = collectionCtrl.current) {
@@ -90,6 +109,41 @@ let collectionCtrl = {
             throw new Error("Built in collections cannot be modified");
         }
         bank.get(collection).delete(name);
+        let select = dom.ui.get("lSystems");
+        select.removeChild([...select.options].find(option => option.text === name));
+    },
+
+    addLSystem(name, collection = collectionCtrl.current) {
+        if (!collectionCtrl.isUserDefined(collection)) {
+            throw new Error("Built in collections cannot be modified");
+        }
+        collection = bank.get(collection);
+        name = collectionCtrl._getValidName(name, collection);
+        let lSystem = new Map();
+        lSystem.axiom = ls.axiom;
+        lSystem.alpha = -ls.alpha * 180 / Math.PI;
+        lSystem.theta = ls.theta * 180 / Math.PI;
+        lSystem.step = ls.step;
+        lSystem.iterCount = ls.iterCount;
+        lSystem.rules = ls.rules;
+        collection.set(name, lSystem);
+        let option = document.createElement("option");
+        option.text = name;
+        dom.ui.get("lSystems").add(option);
+    },
+
+    updateControlStates() {
+        dom.ui.get("deleteColl").disabled = dom.ui.get("addLS").disabled =
+            dom.ui.get("removeLS").disabled = !collectionCtrl.isUserDefined();
+    },
+
+    _getValidName(name, map) {
+        let i = 2;
+        let validName = name;
+        while (map.has(validName)) {
+            validName = `${name} (${i++})`;
+        }
+        return validName;
     }
 };
 
@@ -97,26 +151,11 @@ let collectionCtrl = {
 let handlers = {
     loadBank(e) {
         collectionCtrl.fillBank(JSON.parse(e.target.responseText));
-        collectionCtrl.fillCollectionList();
-        collectionCtrl.fillLSystemList(bank.keys().next().value);
+        collectionCtrl.current = bank.keys().next().value;
     },
 
     changeCollection(e) {
-        let select = e.target,
-            collection = select.value,
-            delBtn = dom.ui.get("deleteColl");
-        if (collection) {
-            collectionCtrl.fillLSystemList(collection);
-            delBtn.disabled = !collectionCtrl.isUserDefined();
-        } else {
-            let name = window.prompt("Enter a new collection name", `collection #${bank.size + 1}`);
-            if (name !== null) {
-                collectionCtrl.create(name);
-                delBtn.disabled = false;
-            } else {
-                select.value = collectionCtrl.current;
-            }
-        }
+        collectionCtrl.current = e.target.value;
     },
 
     dblClickLSystem(e) {
@@ -140,6 +179,54 @@ let handlers = {
                 }
                 break;
         }
+    },
+
+    clickCreateCollection() {
+        let name = window.prompt("Enter a new collection name", `collection #${bank.size + 1}`);
+        if (name !== null) {
+            collectionCtrl.create(name);
+        }
+    },
+
+    clickDeleteCollection() {
+        if (window.confirm("Delete the selected collection?")) {
+            collectionCtrl.delete();
+        }
+    },
+
+    clickAddLS() {
+        let name = window.prompt("Enter the name of the L-system", "");
+        if (name !== null) {
+            collectionCtrl.addLSystem(name);
+        }
+    },
+
+    clickRemoveLS() {
+        let select = dom.ui.get("lSystems");
+        if (select.selectedIndex >= 0 && collectionCtrl.isUserDefined() &&
+            window.confirm("Delete the selected L-system?")) {
+            collectionCtrl.deleteLSystem(select.value);
+        }
+    },
+
+    changeImport(e) {
+        let reader = new FileReader();
+        let file = e.target.files[0];
+        reader.addEventListener("load", () => {
+            let name = file.name.endsWith(".json") ? file.name.slice(0, -5) : file.name;
+            collectionCtrl.add(name, JSON.parse(reader.result));
+            collectionCtrl.current = name;
+        });
+        reader.addEventListener("error", () => {throw reader.error;});
+        reader.readAsText(file);
+    },
+
+    mouseDownExport(e) {
+        let link = e.target;
+        URL.revokeObjectURL(link.href);
+        let blob = new Blob([collectionCtrl.stringify()], {type: "application/json"});
+        link.href = URL.createObjectURL(blob);
+        link.download = `${collectionCtrl.current}.json`;
     }
 };
 
@@ -151,3 +238,12 @@ xhr.send(null);
 dom.ui.get("collections").addEventListener("change", handlers.changeCollection);
 dom.ui.get("lSystems").addEventListener("dblclick", handlers.dblClickLSystem);
 dom.ui.get("lSystems").addEventListener("keydown", handlers.keyDownLSystem);
+
+dom.ui.get("createColl").addEventListener("click", handlers.clickCreateCollection);
+dom.ui.get("deleteColl").addEventListener("click", handlers.clickDeleteCollection);
+
+dom.ui.get("addLS").addEventListener("click", handlers.clickAddLS);
+dom.ui.get("removeLS").addEventListener("click", handlers.clickRemoveLS);
+
+dom.ui.get("importColl").addEventListener("change", handlers.changeImport);
+dom.ui.get("exportColl").addEventListener("mousedown", handlers.mouseDownExport);
