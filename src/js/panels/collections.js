@@ -15,23 +15,29 @@ let collectionCtrl = {
         collectionCtrl.updateControlStates();
     },
 
-    fillBank(collections) {
+    fillBank() {
         dom.ui.get("collections").length = 0;
-        for (let collName of Object.keys(collections).sort()) {
-            collectionCtrl.add(collName, collections[collName], false);
-        }
-    },
 
-    stringify(collection = collectionCtrl.current) {
-        let list = {};
-        for (let [name, params] of bank.get(collection)) {
-            let data = list[name] = {rules: {}};
-            ({axiom: data.axiom, alpha: data.alpha, theta: data.theta, iterCount: data.iterCount, step: data.step} = params);
-            for (let [letter, rule] of params.rules) {
-                data.rules[letter] = rule;
+        // Load built in collections
+        let xhr = new XMLHttpRequest();
+        xhr.open("GET", "lib/bank.json");
+        xhr.send(null);
+        xhr.addEventListener("load", () => {
+            let collections = JSON.parse(xhr.responseText);
+            for (let collName of Object.keys(collections).sort()) {
+                collectionCtrl.add(collName, collections[collName], false, false);
+            }
+            collectionCtrl.current = bank.keys().next().value;
+        });
+
+        // Load user defined collections (if any)
+        let userCollections = localStorage.getItem("userCollections");
+        if (userCollections) {
+            userCollections = JSON.parse(userCollections);
+            for (let collName of Object.keys(userCollections).sort()) {
+                collectionCtrl.add(collName, userCollections[collName], true, false);
             }
         }
-        return JSON.stringify(list, null, 2);
     },
 
     fillLSystemList(collection = collectionCtrl.current) {
@@ -58,34 +64,19 @@ let collectionCtrl = {
         ls.setRules(params.rules);
     },
     
-    create(name) {
+    add(name, lSystems = {}, userDefined = true, setCurrent = true) {
         name = collectionCtrl._getValidName(name, bank);
-        let collection = new Map();
-        // User defined collections are editable in contrast to built in collections.
-        // So we need an attribute to distinct these two types of collections
-        collection.userDefined = true;
-        bank.set(name, collection);
-        let option = document.createElement("option");
-        option.text = name;
-        dom.ui.get("collections").add(option);
-        collectionCtrl.current = name;
-    },
-
-    add(name, lSystems, userDefined = true) {
-        name = collectionCtrl._getValidName(name, bank);
-        let collection = new Map();
+        let collection = collectionCtrl.plainToCollection(lSystems);
         // User defined collections are editable in contrast to built in collections.
         // So we need an attribute to distinct these two types of collections
         collection.userDefined = userDefined;
         bank.set(name, collection);
-        for (let itemName of Object.keys(lSystems).sort()) {
-            let params = lSystems[itemName];
-            params.rules = new Map(Object.keys(params.rules).map(letter => [letter, params.rules[letter]]));
-            collection.set(itemName, params);
-        }
         let option = document.createElement("option");
         option.text = name;
-        dom.ui.get("collections").add(option);
+        dom.ui.get("collections").children[userDefined ? 1 : 0].appendChild(option);
+        if (setCurrent) {
+            collectionCtrl.current = name;
+        }
     },
 
     delete(collection = collectionCtrl.current) {
@@ -97,7 +88,7 @@ let collectionCtrl = {
             collectionCtrl.current = bank.keys().next().value;
         }
         let select = dom.ui.get("collections");
-        select.removeChild([...select.options].find(option => option.text === collection));
+        select.children[1].removeChild([...select.options].find(option => option.text === collection));
     },
 
     isUserDefined(collection = collectionCtrl.current) {
@@ -137,6 +128,38 @@ let collectionCtrl = {
             dom.ui.get("removeLS").disabled = !collectionCtrl.isUserDefined();
     },
 
+    storeUserCollections() {
+        let userCollections = {};
+        for (let collection of bank.keys()) {
+            if (collectionCtrl.isUserDefined(collection)) {
+                userCollections[collection] = collectionCtrl.collectionToPlain(collection);
+            }
+        }
+        localStorage.setItem("userCollections", JSON.stringify(userCollections));
+    },
+
+    collectionToPlain(collection = collectionCtrl.current) {
+        let plain = {};
+        for (let [name, params] of bank.get(collection)) {
+            let data = plain[name] = {rules: {}};
+            ({axiom: data.axiom, alpha: data.alpha, theta: data.theta, iterCount: data.iterCount, step: data.step} = params);
+            for (let [letter, rule] of params.rules) {
+                data.rules[letter] = rule;
+            }
+        }
+        return plain;
+    },
+
+    plainToCollection(plain) {
+        let collection = new Map();
+        for (let itemName of Object.keys(plain).sort()) {
+            let params = plain[itemName];
+            params.rules = new Map(Object.keys(params.rules).map(letter => [letter, params.rules[letter]]));
+            collection.set(itemName, params);
+        }
+        return collection;
+    },
+
     _getValidName(name, map) {
         let i = 2;
         let validName = name;
@@ -147,13 +170,10 @@ let collectionCtrl = {
     }
 };
 
+collectionCtrl.fillBank();
+
 
 let handlers = {
-    loadBank(e) {
-        collectionCtrl.fillBank(JSON.parse(e.target.responseText));
-        collectionCtrl.current = bank.keys().next().value;
-    },
-
     changeCollection(e) {
         collectionCtrl.current = e.target.value;
     },
@@ -184,7 +204,7 @@ let handlers = {
     clickCreateCollection() {
         let name = window.prompt("Enter a new collection name", `collection #${bank.size + 1}`);
         if (name !== null) {
-            collectionCtrl.create(name);
+            collectionCtrl.add(name);
         }
     },
 
@@ -215,7 +235,6 @@ let handlers = {
         reader.addEventListener("load", () => {
             let name = file.name.endsWith(".json") ? file.name.slice(0, -5) : file.name;
             collectionCtrl.add(name, JSON.parse(reader.result));
-            collectionCtrl.current = name;
         });
         reader.addEventListener("error", () => {throw reader.error;});
         reader.readAsText(file);
@@ -224,16 +243,16 @@ let handlers = {
     mouseDownExport(e) {
         let link = e.target;
         URL.revokeObjectURL(link.href);
-        let blob = new Blob([collectionCtrl.stringify()], {type: "application/json"});
+        let data = [JSON.stringify(collectionCtrl.collectionToPlain(), null, 2)];
+        let blob = new Blob(data, {type: "application/json"});
         link.href = URL.createObjectURL(blob);
         link.download = `${collectionCtrl.current}.json`;
+    },
+
+    beforeUnload() {
+        collectionCtrl.storeUserCollections();
     }
 };
-
-let xhr = new XMLHttpRequest();
-xhr.open("GET", "lib/bank.json");
-xhr.addEventListener("load", handlers.loadBank);
-xhr.send(null);
 
 dom.ui.get("collections").addEventListener("change", handlers.changeCollection);
 dom.ui.get("lSystems").addEventListener("dblclick", handlers.dblClickLSystem);
@@ -247,3 +266,5 @@ dom.ui.get("removeLS").addEventListener("click", handlers.clickRemoveLS);
 
 dom.ui.get("importColl").addEventListener("change", handlers.changeImport);
 dom.ui.get("exportColl").addEventListener("mousedown", handlers.mouseDownExport);
+
+window.addEventListener("beforeunload", handlers.beforeUnload);
