@@ -40,6 +40,30 @@
         border:solid #d5d5d5;
         border-width:1px 0 0;
     }
+
+    [data-mark] {
+        display:block;
+        position:relative;
+        &:before {
+            background:#eee;
+            border-radius:3px;
+            box-shadow:0 0 2px 0 #777 inset;
+            box-sizing:border-box;
+            content:attr(data-mark);
+            font:bold 12px/1 Arial,sans-serif;
+            left:4px;
+            min-height:16px;
+            min-width:16px;
+            padding:2px;
+            position:absolute;
+            text-align:center;
+            top:4px;
+        }
+
+        input {
+            padding:2px 2px 2px 25px;
+        }
+    }
 }
 
 .ls-tabs {
