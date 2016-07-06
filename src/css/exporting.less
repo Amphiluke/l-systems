@@ -1,0 +1,25 @@
+.ls-export-controls {
+    position:relative;
+
+    button {
+        width:30%;
+
+        .ls-export-requested & {
+            visibility:hidden;
+        }
+    }
+
+    [data-ls-id="exportImg"] {
+        left:0;
+        line-height:1.5em;
+        position:absolute;
+        text-align:center;
+        top:0;
+        visibility:hidden;
+        width:100%;
+
+        .ls-export-requested & {
+            visibility:visible;
+        }
+    }
+}

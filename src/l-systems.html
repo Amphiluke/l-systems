@@ -97,8 +97,17 @@
             </fieldset>
         </form>
 
-        <form action="#" class="ls-panel" data-ls-id="exporting.panels" autocomplete="off">
-            <a href="#" data-ls-id="export" target="_blank" download="l-system.png">Export to PNG…</a>
+        <form action="#" class="ls-panel ls-panel-exporting" data-ls-id="exporting.panels" autocomplete="off">
+            <fieldset>
+                <legend>Export as an image</legend>
+                <div class="ls-export-controls">
+                    <a href="#" data-ls-id="exportImg" class="ls-" target="_blank" download>Download PNG…</a>
+                    <button type="button" data-mime-type="image/png">PNG</button>
+                    <button type="button" data-mime-type="image/gif">GIF</button>
+                    <button type="button" data-mime-type="image/jpeg">JPG</button>
+                </div>
+            </fieldset>
+            <hr>
             <button type="button" data-ls-id="makeLink">Generate a link</button>
             <textarea data-ls-id="link" cols="20" rows="3" title="Hyperlink for the current L-system" readonly></textarea>
         </form>

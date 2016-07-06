@@ -3,6 +3,7 @@ import channel from "../channel.js";
 import "./collections.js";
 import "./settings.js";
 import "./appearance.js";
+import "./exporting.js";
 
 let openedPanel = [...dom.ui.get(".panels").values()]
     .find(el => el.classList.contains("ls-panel-open"));
