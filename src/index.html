@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>L-systems</title>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+    <main>
+        <canvas data-ls-id="canvas" moz-opaque></canvas>
+
+        <form action="#" class="ls-panel ls-panel-collections" data-ls-id="collections.panels" autocomplete="off">
+            <fieldset>
+                <legend>Collections</legend>
+                <select data-ls-id="collections" title="Select a collection">
+                    <optgroup label="Built in"></optgroup>
+                    <optgroup label="User defined"></optgroup>
+                </select>
+                <span class="ls-collection-list-btns">
+                    <button type="button" data-ls-id="createColl" title="Create a new collection">+</button>
+                    <button type="button" data-ls-id="deleteColl" title="Delete collection" disabled>✗</button>
+                </span>
+                <select data-ls-id="lSystems" title="Select an L-system" size="5" multiple>
+                    <option value="-">—</option>
+                </select>
+                <p class="ls-note">Double click (or press Enter) to explore L-system. Press Spacebar to plot</p>
+            </fieldset>
+
+            <fieldset>
+                <legend>Manage collections</legend>
+                <button type="button" data-ls-id="addLS" title="Add current L-system to the selected collection" disabled>Add to collection…</button>
+                <button type="button" data-ls-id="removeLS" title="Remove the selected L-system from the collection" disabled>Remove from collection</button>
+                <hr>
+                <label class="ls-import-coll">Import collection…<input type="file" data-ls-id="importColl" accept=".json"></label>
+                <a href="#" data-ls-id="exportColl" download="collection.json">Export collection…</a>
+            </fieldset>
+        </form>
+
+        <form action="#" class="ls-panel ls-panel-settings" data-ls-id="settings.panels" autocomplete="off">
+            <label data-mark="A"><input type="text" data-ls-id="axiom" placeholder="Axiom" title="Axiom" pattern="[A-Za-z\+\-\[\]]+"></label>
+            <fieldset class="ls-rules">
+                <legend>Production rules</legend>
+                <label data-mark="F"><input type="text" data-letter="F" placeholder="Forward w/ drawing" title="Forward w/ drawing" pattern="[A-Za-z\+\-\[\]]+"></label>
+                <label data-mark="B"><input type="text" data-letter="B" placeholder="Forward w/o drawing" title="Forward w/o drawing" pattern="[A-Za-z\+\-\[\]]+"></label>
+                <script type="text/template" data-ls-id="ruleTpl">
+                    <label data-mark="${letter}"><input type="text" data-letter="${letter}" value="${rule}" pattern="[A-Za-z\+\-\[\]]+"></label>
+                </script>
+                <button type="button" data-ls-id="addRule">Add a rule</button>
+                <div class="ls-letter-popup" data-ls-id="letterPopup">
+                    <button type="button" value="A">A</button>
+                    <button type="button" value="C">C</button>
+                    <button type="button" value="D">D</button>
+                    <button type="button" value="E">E</button>
+                    <button type="button" value="G">G</button>
+                    <button type="button" value="H">H</button>
+                    <button type="button" value="I">I</button>
+                    <button type="button" value="J">J</button>
+                    <button type="button" value="K">K</button>
+                    <button type="button" value="L">L</button>
+                    <button type="button" value="M">M</button>
+                    <button type="button" value="N">N</button>
+                    <button type="button" value="O">O</button>
+                    <button type="button" value="P">P</button>
+                    <button type="button" value="Q">Q</button>
+                    <button type="button" value="R">R</button>
+                    <button type="button" value="S">S</button>
+                    <button type="button" value="T">T</button>
+                    <button type="button" value="U">U</button>
+                    <button type="button" value="V">V</button>
+                    <button type="button" value="W">W</button>
+                    <button type="button" value="X">X</button>
+                    <button type="button" value="Y">Y</button>
+                    <button type="button" value="Z">Z</button>
+                    <button type="button" value="" title="Delete rule (Ctrl+Del)">&#x2717;</button>
+                </div>
+            </fieldset>
+            <label data-mark="α"><input type="text" data-ls-id="alpha" placeholder="Initial angle α, deg." title="Initial angle α, deg." pattern="-?\d+(\.\d+)?"></label>
+            <label data-mark="θ"><input type="text" data-ls-id="theta" placeholder="Angle increment θ, deg." title="Angle increment θ, deg." pattern="-?\d+(\.\d+)?"></label>
+            <label data-mark="S"><input type="text" data-ls-id="step" placeholder="Step" title="Step" pattern="\d+(\.\d+)?"></label>
+            <label data-mark="N"><input type="number" data-ls-id="iterCount" placeholder="Iteration count" title="Iteration count" min="1"></label>
+            <button type="submit" data-ls-id="plot">Plot</button>
+        </form>
+
+        <form action="#" class="ls-panel" data-ls-id="appearance.panels" autocomplete="off">
+            <fieldset>
+                <legend>Colors</legend>
+                <label>FG <input type="color" value="#008000" data-ls-id="fgClr" title="Line color"></label>
+                <label>BG <input type="color" value="#ffffff" data-ls-id="bgClr" title="Background color"></label>
+            </fieldset>
+            <fieldset>
+                <legend>Transformations</legend>
+                <label data-mark="φ"><input type="text" data-ls-id="phiRotation" placeholder="Rotation angle, deg." title="Rotation angle, deg." pattern="-?\d+(\.\d+)?"></label>
+                <label data-mark="x"><input type="number" data-ls-id="xTranslation" placeholder="X translation, px" title="X translation, px"></label>
+                <label data-mark="y"><input type="number" data-ls-id="yTranslation" placeholder="Y translation, px" title="Y translation, px"></label>
+                <label data-mark="±"><input type="number" min="0.1" max="10" step="0.1" data-ls-id="scaling" placeholder="Scaling factor" title="Scaling factor, 0.1 ≤ N ≤ 10"></label>
+            </fieldset>
+        </form>
+
+        <form action="#" class="ls-panel ls-panel-exporting" data-ls-id="exporting.panels" autocomplete="off">
+            <fieldset>
+                <legend>Export as an image</legend>
+                <div class="ls-export-controls">
+                    <a href="#" data-ls-id="exportImg" class="ls-" target="_blank" download>Download PNG…</a>
+                    <button type="button" data-mime-type="image/png">PNG</button>
+                    <button type="button" data-mime-type="image/gif">GIF</button>
+                    <button type="button" data-mime-type="image/jpeg">JPG</button>
+                </div>
+            </fieldset>
+            <hr>
+            <button type="button" data-ls-id="makeLink">Generate a link</button>
+            <textarea data-ls-id="linkAddress" cols="20" rows="3" title="Hyperlink for the current L-system" readonly></textarea>
+        </form>
+
+        <form class="ls-tabs" data-ls-id="tabs">
+            <fieldset>
+                <button type="button" data-ls-ref="collections">Collections</button>
+                <button type="button" data-ls-ref="settings">Settings</button>
+                <button type="button" data-ls-ref="appearance">Appearance</button>
+                <button type="button" data-ls-ref="exporting">Exporting</button>
+            </fieldset>
+        </form>
+    </main>
+
+    <footer>
+        L-system plotter &amp; manager by Amphiluke<br>
+        <a href="https://github.com/Amphiluke/l-systems" target="_blank">Project on GitHub <img src="img/gh-mark.png" alt="" width="32" height="32"></a><br>
+        © 2012–2016
+    </footer>
+
+    <script src="../node_modules/systemjs/dist/system.js"></script>
+    <script>
+        System.config({baseURL: "./js"});
+        System.import("index.sys.js");
+    </script>
+</body>
+</html>

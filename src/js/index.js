@@ -1,1 +1,1 @@
-import "./interface.js";
+import "./panels/panels.js";

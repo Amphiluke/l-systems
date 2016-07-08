@@ -5,7 +5,8 @@ let gulp = require("gulp"),
     rename = require("gulp-rename"),
     replace = require("gulp-replace"),
     less = require("gulp-less"),
-    LessPluginCleanCSS = require("less-plugin-clean-css");
+    LessPluginCleanCSS = require("less-plugin-clean-css"),
+    Builder = require("systemjs-builder");
 
 
 gulp.task("transpile", () => {
@@ -26,3 +27,31 @@ gulp.task("styles-dev", () => {
 });
 
 gulp.task("prepare", ["transpile", "styles-dev"]);
+
+
+gulp.task("scripts-prod", ["transpile"], () => {
+    let builder = new Builder("./");
+    return builder.buildStatic("src/js/index.sys.js", "build/js/index.sys.js");
+});
+
+gulp.task("styles-prod", ["styles-dev"], () => {
+    return gulp.src("src/css/main.css")
+        .pipe(gulp.dest("build/css/"));
+});
+
+gulp.task("html-prod", () => {
+    return gulp.src("src/index.html")
+        .pipe(gulp.dest("build/"));
+});
+
+gulp.task("lib-prod", () => {
+    return gulp.src("src/lib/bank.json")
+        .pipe(gulp.dest("build/lib/"));
+});
+
+gulp.task("img-prod", () => {
+    return gulp.src("src/img/**/*")
+        .pipe(gulp.dest("build/img/"));
+});
+
+gulp.task("build", ["scripts-prod", "styles-prod", "html-prod", "lib-prod", "img-prod"]);
