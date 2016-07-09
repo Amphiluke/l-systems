@@ -1,6 +1,6 @@
 {
   "name": "l-systems",
-  "version": "2.0.0-beta",
+  "version": "2.0.0",
   "description": "A simple canvas-based L-system generator and manager",
   "main": "src/js/index.js",
   "scripts": {

@@ -13,3 +13,5 @@ The `ref` fields in the `bank.json` file either contain information on the L-sys
 * `[PP]` — from P. Prusinkiewicz & J. Hanan, 1989
 * `[SE]` — SirEdvin
 * `[WM]` — William McWorter
+
+I apologize to the authors of L-systems going without any attribution. Any help with affiliation of those L-systems is appreciated.
