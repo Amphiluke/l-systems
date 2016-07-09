@@ -1,6 +1,6 @@
 # L-system authors & references:
 
-The `ref` fields in the `bank.json` file either contain information on the L-system authors or reference the source where the L-system parameters were found.
+The `ref` fields in the [`bank.json`](bank.json) file either contain information on the L-system authors or reference the source where the L-system parameters were found.
 
 * `[AH]` — Anthony Hanmer
 * `[AK]` — A.V. Kalmykov
