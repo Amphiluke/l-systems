@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>L-systems</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimal-ui">
     <link rel="icon" type="image/png" href="favicon.png">
     <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
 
     <main>
-        <canvas data-ls-id="canvas" moz-opaque></canvas>
+        <canvas data-ls-id="canvas"></canvas>
 
         <form action="#" class="ls-panel ls-panel-collections" data-ls-id="collections.panels" autocomplete="off">
             <fieldset>
@@ -25,7 +26,7 @@
                 <select data-ls-id="lSystems" title="Select an L-system" size="5" multiple>
                     <option value="-">—</option>
                 </select>
-                <p class="ls-note">Double click (or press Enter) to explore L-system. Press Spacebar to plot</p>
+                <p class="ls-note">Double click (or press Enter) to explore an L-system. Press Spacebar to plot</p>
             </fieldset>
 
             <fieldset>
@@ -85,16 +86,20 @@
 
         <form action="#" class="ls-panel" data-ls-id="appearance.panels" autocomplete="off">
             <fieldset>
-                <legend>Colors</legend>
-                <label>FG <input type="color" value="#008000" data-ls-id="fgClr" title="Line color"></label>
-                <label>BG <input type="color" value="#ffffff" data-ls-id="bgClr" title="Background color"></label>
+                <legend>Line style</legend>
+                <label>Color <input type="color" value="#008000" data-ls-id="fgClr" title="Line color"></label>
+            </fieldset>
+            <fieldset>
+                <legend>Background</legend>
+                <label><input type="checkbox" data-ls-id="noBgClr" checked> Transparent</label><br>
+                <label>Color <input type="color" value="#ffffff" data-ls-id="bgClr" title="Background color" disabled></label>
             </fieldset>
             <fieldset>
                 <legend>Transformations</legend>
-                <label data-mark="φ"><input type="text" data-ls-id="phiRotation" placeholder="Rotation angle, deg." title="Rotation angle, deg." pattern="-?\d+(\.\d+)?"></label>
-                <label data-mark="x"><input type="number" data-ls-id="xTranslation" placeholder="X translation, px" title="X translation, px"></label>
-                <label data-mark="y"><input type="number" data-ls-id="yTranslation" placeholder="Y translation, px" title="Y translation, px"></label>
-                <label data-mark="±"><input type="number" min="0.1" max="10" step="0.1" data-ls-id="scaling" placeholder="Scaling factor" title="Scaling factor, 0.1 ≤ N ≤ 10"></label>
+                <label data-mark="φ"><input type="text" data-transform="rotate" placeholder="Rotation angle, deg." title="Rotation angle, deg." pattern="-?\d+(\.\d+)?"></label>
+                <label data-mark="x"><input type="number" data-transform="translateX" placeholder="X translation, px" title="X translation, px"></label>
+                <label data-mark="y"><input type="number" data-transform="translateY" placeholder="Y translation, px" title="Y translation, px"></label>
+                <label data-mark="±"><input type="number" min="0.1" max="10" step="0.1" data-transform="scale" placeholder="Scaling factor" title="Scaling factor, 0.1 ≤ N ≤ 10"></label>
             </fieldset>
         </form>
 
