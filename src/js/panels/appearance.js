@@ -1,68 +1,64 @@
 import dom from "../dom.js";
 import plotter from "../plotter.js";
 
-let canvas = dom.ui.get("canvas");
+let panel = dom.ui.get(".panels").get("appearance"),
+    canvas = dom.ui.get("canvas");
 
-let handlers = {
-    changeFG(e) {
-        plotter.settings.strokeStyle = e.target.value;
+let appearanceCtrl = {
+    setFg(color) {
+        plotter.settings.strokeStyle = color;
         plotter.repaint();
     },
 
-    changeBG(e) {
-        plotter.settings.fillStyle = document.body.style.background = e.target.value;
+    setBg(color) {
+        plotter.settings.fillStyle = document.body.style.background = color;
         plotter.repaint();
     },
 
-    changePhi(e) {
-        let style = canvas.style;
-        let otherTransforms = style.transform.replace(/\s*rotate\(.+?deg\)/, "").trim();
-        let value = e.target.value;
-        if (!value) {
-            style.transform = otherTransforms;
-        } else if (e.target.validity.valid) {
-            style.transform = `${otherTransforms} rotate(${value}deg)`.trim();
-        }
+    transforms: {
+        rotate: {pattern: /\s*rotate\(.+?deg\)/, unit: "deg"},
+        translateX: {pattern: /\s*translateX\(.+?px\)/, unit: "px"},
+        translateY: {pattern: /\s*translateY\(.+?px\)/, unit: "px"},
+        scale: {pattern: /\s*scale\(.+?\)/, unit: ""}
     },
 
-    changeX(e) {
+    setTransform(transform, value) {
         let style = canvas.style;
-        let otherTransforms = style.transform.replace(/\s*translateX\(.+?px\)/, "").trim();
-        let value = e.target.value;
+        let {pattern, unit} = appearanceCtrl.transforms[transform];
+        let otherTransforms = style.transform.replace(pattern, "").trim();
         if (!value) {
             style.transform = otherTransforms;
-        } else if (e.target.validity.valid) {
-            style.transform = `${otherTransforms} translateX(${value}px)`.trim();
-        }
-    },
-
-    changeY(e) {
-        let style = canvas.style;
-        let otherTransforms = style.transform.replace(/\s*translateY\(.+?px\)/, "").trim();
-        let value = e.target.value;
-        if (!value) {
-            style.transform = otherTransforms;
-        } else if (e.target.validity.valid) {
-            style.transform = `${otherTransforms} translateY(${value}px)`.trim();
-        }
-    },
-
-    changeScaling(e) {
-        let style = canvas.style;
-        let otherTransforms = style.transform.replace(/\s*scale\(.+?\)/, "").trim();
-        let value = e.target.value;
-        if (!value) {
-            style.transform = otherTransforms;
-        } else if (e.target.validity.valid) {
-            style.transform = `${otherTransforms} scale(${value})`.trim();
+        } else {
+            style.transform = `${otherTransforms} ${transform}(${value}${unit})`.trim();
         }
     }
 };
 
-dom.ui.get("fgClr").addEventListener("change", handlers.changeFG);
-dom.ui.get("bgClr").addEventListener("change", handlers.changeBG);
+let handlers = {
+    changeFg(e) {
+        appearanceCtrl.setFg(e.target.value);
+    },
 
-dom.ui.get("phiRotation").addEventListener("change", handlers.changePhi);
-dom.ui.get("xTranslation").addEventListener("change", handlers.changeX);
-dom.ui.get("yTranslation").addEventListener("change", handlers.changeY);
-dom.ui.get("scaling").addEventListener("change", handlers.changeScaling);
+    changeBg(e) {
+        appearanceCtrl.setBg(e.target.value);
+    },
+
+    toggleTransparency(e) {
+        let bgInput = dom.ui.get("bgClr");
+        let transparent = bgInput.disabled = e.target.checked;
+        appearanceCtrl.setBg(transparent ? "transparent" : bgInput.value);
+    },
+
+    changeTransform(e) {
+        let transform = e.target.dataset.transform;
+        if (transform && e.target.validity.valid) {
+            appearanceCtrl.setTransform(transform, e.target.value.trim());
+        }
+    }
+};
+
+dom.ui.get("fgClr").addEventListener("change", handlers.changeFg);
+dom.ui.get("bgClr").addEventListener("change", handlers.changeBg);
+dom.ui.get("noBgClr").addEventListener("change", handlers.toggleTransparency);
+
+panel.addEventListener("change", handlers.changeTransform);

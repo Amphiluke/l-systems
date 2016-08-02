@@ -1,6 +1,6 @@
 {
   "name": "l-systems",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "A simple canvas-based L-system generator and manager",
   "main": "src/js/index.js",
   "scripts": {
@@ -27,11 +27,11 @@
   "homepage": "https://github.com/Amphiluke/l-systems#readme",
   "dependencies": {
     "normalize.css": "^4.2.0",
-    "systemjs": "^0.19.31"
+    "systemjs": "^0.19.35"
   },
   "devDependencies": {
-    "babel-plugin-transform-es2015-modules-systemjs": "^6.9.0",
-    "eslint": "^2.13.1",
+    "babel-plugin-transform-es2015-modules-systemjs": "^6.12.0",
+    "eslint": "^3.2.0",
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
     "gulp-less": "^3.1.0",
@@ -39,6 +39,6 @@
     "gulp-replace": "^0.5.4",
     "less": "^2.7.1",
     "less-plugin-clean-css": "^1.5.1",
-    "systemjs-builder": "^0.15.23"
+    "systemjs-builder": "^0.15.25"
   }
 }

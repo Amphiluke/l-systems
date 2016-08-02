@@ -30,8 +30,8 @@ gulp.task("prepare", ["transpile", "styles-dev"]);
 
 
 gulp.task("scripts-prod", ["transpile"], () => {
-    let builder = new Builder("./");
-    return builder.buildStatic("src/js/index.sys.js", "build/js/index.sys.js");
+    let builder = new Builder("./src/js/");
+    return builder.bundle("index.sys.js", "build/js/index.sys.js");
 });
 
 gulp.task("styles-prod", ["styles-dev"], () => {

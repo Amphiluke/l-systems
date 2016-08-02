@@ -73,7 +73,7 @@ preactions.set("]", function () {
 
 let plotter = {
     settings: {
-        fillStyle: "#fff",
+        fillStyle: "transparent",
         strokeStyle: "#080"
     },
 
@@ -120,6 +120,7 @@ let plotter = {
     clear() {
         ctx.strokeStyle = this.settings.strokeStyle;
         ctx.fillStyle = this.settings.fillStyle;
+        ctx.clearRect(0, 0, canvas.offsetWidth, canvas.offsetHeight);
         ctx.fillRect(0, 0, canvas.offsetWidth, canvas.offsetHeight);
     },
 
