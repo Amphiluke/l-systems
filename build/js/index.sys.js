@@ -1166,10 +1166,18 @@ System.register("panels/panels.sys.js", ["../dom.sys.js", "../channel.sys.js", "
     };
 });
 System.register("index.sys.js", ["./panels/panels.sys.js"], function (_export, _context) {
-  "use strict";
+    "use strict";
 
-  return {
-    setters: [function (_panelsPanelsSysJs) {}],
-    execute: function () {}
-  };
+    var panels;
+    return {
+        setters: [function (_panelsPanelsSysJs) {
+            panels = _panelsPanelsSysJs.default;
+        }],
+        execute: function () {
+
+            if (window.innerWidth >= 980) {
+                panels.show("collections");
+            }
+        }
+    };
 });
