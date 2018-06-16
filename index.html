@@ -4,14 +4,13 @@
     <meta charset="UTF-8">
     <title>L-systems</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimal-ui">
-    <link rel="icon" type="image/png" href="favicon.png">
     <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
 
-    <main>
-        <canvas data-ls-id="canvas"></canvas>
+    <canvas data-ls-id="canvas"></canvas>
 
+    <section class="ls-sidebar">
         <form action="#" class="ls-panel ls-panel-collections" data-ls-id="collections.panels" autocomplete="off">
             <fieldset>
                 <legend>Collections</legend>
@@ -126,18 +125,14 @@
                 <button type="button" data-ls-ref="exporting" accesskey="x">Ex&#818;porting</button>
             </fieldset>
         </form>
-    </main>
 
-    <footer>
-        L-system plotter &amp; manager by Amphiluke<br>
-        <a href="https://github.com/Amphiluke/l-systems" target="_blank">Project on GitHub <img src="img/gh-mark.png" alt="" width="32" height="32"></a><br>
-        © 2012–2016
-    </footer>
+        <footer class="ls-about">
+            L-system plotter &amp; manager by Amphiluke<br>
+            <a href="https://github.com/Amphiluke/l-systems" target="_blank">Project on GitHub</a><br>
+            © 2012–2018
+        </footer>
+    </section>
 
-    <script src="system.js"></script>
-    <script>
-        System.config({baseURL: "./js"});
-        System.import("index.sys.js");
-    </script>
+    <script type="module" src="js/index.js"></script>
 </body>
 </html>
