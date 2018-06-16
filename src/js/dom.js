@@ -15,7 +15,7 @@ let dom = {
             this.ui.set(lsId, el);
         }
     },
-    
+
     // Use this to search non-cached dynamic elements
     getElementByLSID(lsId, context = document.body) {
         return context.querySelector(`[data-ls-id="${lsId}"]`);

@@ -9,7 +9,7 @@ let rulesBlock = panel.querySelector(".ls-rules");
 
 let ruleCtrl = {
     tpl: dom.ui.get("ruleTpl"),
-    
+
     delete(letter) {
         if (ls.deleteRule(letter)) {
             let label = rulesBlock.querySelector(`[data-mark="${letter}"]`);
@@ -24,7 +24,7 @@ let ruleCtrl = {
         if (!letter) {
             return;
         }
-        let html = ruleCtrl.tpl.innerHTML.replace(/\$\{(?:letter|rule)\}/g, letter);
+        let html = ruleCtrl.tpl.innerHTML.replace(/\${(?:letter|rule)}/g, letter);
         beforeEl.insertAdjacentHTML("beforebegin", html);
         ls.setRule(letter, letter);
         let input = rulesBlock.querySelector(`input[data-letter="${letter}"]`);
@@ -51,7 +51,7 @@ let ruleCtrl = {
             if (letter === "F" || letter === "B") {
                 rulesBlock.querySelector(`input[data-letter="${letter}"]`).value = rule;
             } else {
-                let html = template.replace(/\$\{letter\}/g, letter).replace(/\$\{rule\}/g, rule);
+                let html = template.replace(/\${letter}/g, letter).replace(/\${rule}/g, rule);
                 ruleCtrl.tpl.insertAdjacentHTML("beforebegin", html);
             }
         }
@@ -81,13 +81,13 @@ let handlers = {
     keyDownInsert(e) {
         let letter = e.target.dataset.letter;
         if (letter) {
-            let beforeEl = (letter === "F")
-                ? undefined
-                : rulesBlock.querySelector(`[data-mark="${letter}"]`).nextElementSibling;
+            let beforeEl = (letter === "F") ?
+                undefined :
+                rulesBlock.querySelector(`[data-mark="${letter}"]`).nextElementSibling;
             ruleCtrl.insert([...ls.vacantLetters][0], beforeEl);
         }
     },
-    
+
     clickRuleLetter(e) {
         let target = e.target;
         let letter = target.dataset.mark;

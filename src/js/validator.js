@@ -1,4 +1,4 @@
-let ruleRE = /^[A-Z\+\-\[\]]*$/;
+let ruleRE = /^[A-Z+\-[\]]*$/;
 
 let validator = {
     messages: {

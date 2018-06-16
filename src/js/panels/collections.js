@@ -1,3 +1,4 @@
+import bankData from "../bank.js";
 import ls from "../ls.js";
 import dom from "../dom.js";
 import channel from "../channel.js";
@@ -19,16 +20,10 @@ let collectionCtrl = {
         dom.ui.get("collections").length = 0;
 
         // Load built in collections
-        let xhr = new XMLHttpRequest();
-        xhr.open("GET", "lib/bank.json");
-        xhr.send(null);
-        xhr.addEventListener("load", () => {
-            let collections = JSON.parse(xhr.responseText);
-            for (let collName of Object.keys(collections).sort()) {
-                collectionCtrl.add(collName, collections[collName], false, false);
-            }
-            collectionCtrl.current = bank.keys().next().value;
-        });
+        for (let collName of Object.keys(bankData).sort()) {
+            collectionCtrl.add(collName, bankData[collName], false, false);
+        }
+        collectionCtrl.current = bank.keys().next().value;
 
         // Load user defined collections (if any)
         let userCollections = localStorage.getItem("userCollections");
@@ -63,7 +58,7 @@ let collectionCtrl = {
         ls.iterCount = params.iterCount;
         ls.setRules(params.rules);
     },
-    
+
     add(name, lSystems = {}, userDefined = true, setCurrent = true) {
         name = collectionCtrl._getValidName(name, bank);
         let collection = collectionCtrl.plainToCollection(lSystems);
@@ -236,7 +231,9 @@ let handlers = {
             let name = file.name.endsWith(".json") ? file.name.slice(0, -5) : file.name;
             collectionCtrl.add(name, JSON.parse(reader.result));
         });
-        reader.addEventListener("error", () => {throw reader.error;});
+        reader.addEventListener("error", () => {
+            throw reader.error;
+        });
         reader.readAsText(file);
     },
 

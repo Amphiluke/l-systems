@@ -4,11 +4,10 @@
   "description": "A simple canvas-based L-system generator and manager",
   "main": "src/js/index.js",
   "scripts": {
-    "postinstall": "gulp prepare",
-    "transpile": "gulp transpile",
+    "postinstall": "lessc --clean-css=\"--advanced\" src/css/main.less src/css/main.css",
     "lint": "eslint src/js/**/*.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "gulp build"
+    "build": "rollup -c && copyfiles -u 1 src/css/main.css src/index.html build"
   },
   "repository": {
     "type": "git",
@@ -25,20 +24,15 @@
     "url": "https://github.com/Amphiluke/l-systems/issues"
   },
   "homepage": "https://github.com/Amphiluke/l-systems#readme",
-  "dependencies": {
-    "normalize.css": "^5.0.0",
-    "systemjs": "^0.19.41"
-  },
   "devDependencies": {
-    "babel-plugin-transform-es2015-modules-systemjs": "^6.19.0",
-    "eslint": "^3.10.2",
-    "gulp": "^3.9.1",
-    "gulp-babel": "^6.1.2",
-    "gulp-less": "^3.3.0",
-    "gulp-rename": "^1.2.2",
-    "gulp-replace": "^0.5.4",
-    "less": "^2.7.1",
+    "copyfiles": "^2.0.0",
+    "eslint": "^4.19.1",
+    "less": "^3.0.4",
     "less-plugin-clean-css": "^1.5.1",
-    "systemjs-builder": "^0.15.34"
+    "rollup": "^0.60.7",
+    "rollup-plugin-terser": "^1.0.1"
+  },
+  "dependencies": {
+    "normalize.css": "^8.0.0"
   }
 }

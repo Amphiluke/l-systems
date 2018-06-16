@@ -27,26 +27,26 @@ let plotData = {stack: []};
  */
 let actions = new Map();
 
-actions.set("F", function () {
+actions.set("F", () => {
     plotData.x += plotData.step * Math.cos(plotData.alpha);
     plotData.y += plotData.step * Math.sin(plotData.alpha);
     ctx.lineTo(plotData.x, plotData.y);
 });
-actions.set("B", function () {
+actions.set("B", () => {
     plotData.x += plotData.step * Math.cos(plotData.alpha);
     plotData.y += plotData.step * Math.sin(plotData.alpha);
     ctx.moveTo(plotData.x, plotData.y);
 });
-actions.set("+", function () {
+actions.set("+", () => {
     plotData.alpha += plotData.theta;
 });
-actions.set("-", function () {
+actions.set("-", () => {
     plotData.alpha -= plotData.theta;
 });
-actions.set("[", function () {
+actions.set("[", () => {
     plotData.stack.push({x: plotData.x, y: plotData.y, alpha: plotData.alpha});
 });
-actions.set("]", function () {
+actions.set("]", () => {
     ({x: plotData.x, y: plotData.y, alpha: plotData.alpha} = plotData.stack.pop());
     ctx.moveTo(plotData.x, plotData.y);
 });
@@ -57,7 +57,7 @@ actions.set("]", function () {
  */
 let preactions = new Map([...actions]);
 
-preactions.set("F", function () {
+preactions.set("F", () => {
     plotData.x += plotData.step * Math.cos(plotData.alpha);
     plotData.y += plotData.step * Math.sin(plotData.alpha);
     plotData.left = Math.min(plotData.left, plotData.x);
@@ -66,7 +66,7 @@ preactions.set("F", function () {
     plotData.bottom = Math.max(plotData.bottom, plotData.y);
 });
 preactions.set("B", preactions.get("F"));
-preactions.set("]", function () {
+preactions.set("]", () => {
     ({x: plotData.x, y: plotData.y, alpha: plotData.alpha} = plotData.stack.pop());
 });
 
