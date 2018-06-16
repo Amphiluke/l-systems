@@ -6,5 +6,5 @@ export default {
         file: "build/js/index.js",
         format: "es"
     },
-    plugins: [terser()]
+    plugins: [terser({module: true})]
 };
