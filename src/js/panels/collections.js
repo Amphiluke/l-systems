@@ -178,19 +178,19 @@ let handlers = {
         channel.publish("LSystemConfigured");
     },
 
-    keyDownLSystem(e) {
-        switch (e.key) {
+    keyDownLSystem({key, target}) {
+        switch (key) {
             case "Enter":
-                collectionCtrl.setupLSystem(e.target.value);
+                collectionCtrl.setupLSystem(target.value);
                 channel.publish("LSystemConfigured");
                 break;
             case " ":
-                collectionCtrl.setupLSystem(e.target.value);
+                collectionCtrl.setupLSystem(target.value);
                 plotter.plot();
                 break;
             case "Delete":
                 if (collectionCtrl.isUserDefined() && window.confirm("Delete the selected L-system?")) {
-                    collectionCtrl.deleteLSystem(e.target.value);
+                    collectionCtrl.deleteLSystem(target.value);
                 }
                 break;
         }
@@ -237,8 +237,7 @@ let handlers = {
         reader.readAsText(file);
     },
 
-    mouseDownExport(e) {
-        let link = e.target;
+    mouseDownExport({target: link}) {
         URL.revokeObjectURL(link.href);
         let data = [JSON.stringify(collectionCtrl.collectionToPlain(), null, 2)];
         let blob = new Blob(data, {type: "application/json"});

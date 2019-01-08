@@ -37,7 +37,7 @@ let exportCtrl = {
     },
 
     checkURLQuery() {
-        let match = location.search.match(/(?:\?|&)~ls~=([^&]+)/);
+        let match = location.search.match(/[?&]~ls~=([^&]+)/);
         if (!match) {
             return;
         }
