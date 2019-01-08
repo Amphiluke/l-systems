@@ -1,7 +1,7 @@
 {
   "name": "l-systems",
-  "version": "2.0.2",
-  "description": "A simple canvas-based L-system generator and manager",
+  "version": "2.0.3",
+  "description": "Simple canvas-based L-system generator and manager",
   "main": "src/js/index.js",
   "scripts": {
     "postinstall": "lessc --clean-css=\"--advanced\" src/css/main.less src/css/main.css",
@@ -14,16 +14,17 @@
     "url": "git+https://github.com/Amphiluke/l-systems.git"
   },
   "keywords": [
-    "L-system",
+    "l-systems",
+    "fractals",
     "canvas",
-    "JavaScript"
+    "plotter"
   ],
   "author": "Amphiluke",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/Amphiluke/l-systems/issues"
   },
-  "homepage": "https://github.com/Amphiluke/l-systems#readme",
+  "homepage": "https://amphiluke.github.io/l-systems/",
   "devDependencies": {
     "copyfiles": "^2.0.0",
     "eslint": "^4.19.1",

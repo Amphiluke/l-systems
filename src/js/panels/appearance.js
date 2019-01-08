@@ -1,8 +1,8 @@
 import dom from "../dom.js";
 import plotter from "../plotter.js";
 
-let panel = dom.ui.get(".panels").get("appearance"),
-    canvas = dom.ui.get("canvas");
+let panel = dom.ui.get(".panels").get("appearance");
+let canvas = dom.ui.get("canvas");
 
 let appearanceCtrl = {
     setFg(color) {
@@ -49,10 +49,10 @@ let handlers = {
         appearanceCtrl.setBg(transparent ? "transparent" : bgInput.value);
     },
 
-    changeTransform(e) {
-        let transform = e.target.dataset.transform;
-        if (transform && e.target.validity.valid) {
-            appearanceCtrl.setTransform(transform, e.target.value.trim());
+    changeTransform({target}) {
+        let transform = target.dataset.transform;
+        if (transform && target.validity.valid) {
+            appearanceCtrl.setTransform(transform, target.value.trim());
         }
     }
 };

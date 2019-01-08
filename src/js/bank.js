@@ -14,6 +14,9 @@ or reference the source the L-system parameters were taken from:
 * [SE] — SirEdvin
 * [WM] — William McWorter
 
+An asterisk (*) near the reference means that the original L-system parameters
+were modified by me
+
 I apologize to the authors of L-systems going without any attribution.
 Any help with affiliation of those L-systems is appreciated.
 */
@@ -751,18 +754,19 @@ export default {
             alpha: 0,
             theta: 45,
             iterCount: 9,
-            step: 0.9
+            step: 1
         },
 
-        wheel: { // [SE]
-            axiom: "F[X]+F[X]+F[X]+F[X]+F[X]+F[X]+F[X]+F[X]+F[X]+F[X]+F[X]+F[X]+F[X]+F[X]+F[X]+F[X]+F[X]+F[X]+F[X]+F[X]+F[X]+F[X]+F[X]+F[X]+F[X]+F[X]+F[X]+F[X]+F[X]+F[X]+F[X]+F[X]+F[X]+F[X]+F[X]+F[X]+F[X]+F[X]+F[X]+F[X]+F[X]+F[X]+F[X]+F[X]+F[X]+F[X]+F[X]+F[X]+F[X]+F[X]+F[X]+F[X]+F[X]+F[X]+F[X]+F[X]+F[X]+F[X]+F[X]+F[X]+F[X]+F[X]+F[X]+F[X]+F[X]+F[X]+F[X]+F[X]+F[X]+F[X]+F[X]+F[X]",
+        wheel: { // [SE*]
+            axiom: "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
             rules: {
+                W: "F[X]+",
                 X: "[+++++++++++++Y[X]]-------------Y[X]",
                 Y: "YFYF"
             },
             alpha: 0,
             theta: 5,
-            iterCount: 7,
+            iterCount: 8,
             step: 2
         },
 
@@ -855,15 +859,16 @@ export default {
             step: 2.9
         },
 
-        "Cesaro 2": { // [AH]
-            axiom: "F+++++++++F------------------F+++++++++F------------------F+++++++++F------------------F+++++++++F------------------F",
+        "Cesaro 2": { // [AH*]
+            axiom: "AAAA",
             rules: {
+                A: "F+++++++++F------------------",
                 F: "F++++++++F----------------F++++++++F"
             },
             alpha: 0,
             theta: 10,
-            iterCount: 5,
-            step: 3.5
+            iterCount: 6,
+            step: 4
         }
     }
 };

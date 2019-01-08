@@ -88,8 +88,7 @@ let handlers = {
         }
     },
 
-    clickRuleLetter(e) {
-        let target = e.target;
+    clickRuleLetter({target}) {
         let letter = target.dataset.mark;
         if (letter && letter !== "F" && letter !== "B") {
             if (!popup.classList.contains("visible")) {
