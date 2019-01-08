@@ -26,14 +26,14 @@
   },
   "homepage": "https://amphiluke.github.io/l-systems/",
   "devDependencies": {
-    "copyfiles": "^2.0.0",
-    "eslint": "^4.19.1",
-    "less": "^3.0.4",
+    "copyfiles": "^2.1.0",
+    "eslint": "^5.12.0",
+    "less": "^3.9.0",
     "less-plugin-clean-css": "^1.5.1",
-    "rollup": "^0.60.7",
-    "rollup-plugin-terser": "^1.0.1"
+    "rollup": "^1.0.2",
+    "rollup-plugin-terser": "^4.0.1"
   },
   "dependencies": {
-    "normalize.css": "^8.0.0"
+    "normalize.css": "^8.0.1"
   }
 }
