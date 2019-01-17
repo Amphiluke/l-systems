@@ -1,6 +1,6 @@
 {
   "name": "l-systems",
-  "version": "2.0.3",
+  "version": "2.1.0",
   "description": "Simple canvas-based L-system generator and manager",
   "main": "src/js/index.js",
   "scripts": {
@@ -30,8 +30,8 @@
     "eslint": "^5.12.0",
     "less": "^3.9.0",
     "less-plugin-clean-css": "^1.5.1",
-    "rollup": "^1.0.2",
-    "rollup-plugin-terser": "^4.0.1"
+    "rollup": "^1.1.0",
+    "rollup-plugin-terser": "^4.0.2"
   },
   "dependencies": {
     "normalize.css": "^8.0.1"
