@@ -17,13 +17,28 @@ button{
     }
 }
 
-canvas {
-    position:fixed;
-    height:100%;
+.ls-main {
+    height:100vh;
     left:25px;
-    top:0;
+    overflow:hidden;
+    position:fixed;
     transition:transform 0.25s;
-    width:~"calc(100% - 25px)";
+    width:~"calc(100vw - 25px)";
+
+    canvas {
+        height:100%;
+        left:0;
+        position:absolute;
+        top:0;
+        width:100%;
+
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+            height:200%;
+            transform:scale(0.5);
+            transform-origin:0 0;
+            width:200%;
+        }
+    }
 }
 
 @import "sidebar";

@@ -2,7 +2,7 @@ import dom from "../dom.js";
 import plotter from "../plotter.js";
 
 let panel = dom.ui.get(".panels").get("appearance");
-let canvas = dom.ui.get("canvas");
+let mainArea = dom.ui.get("mainArea");
 
 let appearanceCtrl = {
     setFg(color) {
@@ -23,7 +23,7 @@ let appearanceCtrl = {
     },
 
     setTransform(transform, value) {
-        let style = canvas.style;
+        let style = mainArea.style;
         let {pattern, unit} = appearanceCtrl.transforms[transform];
         let otherTransforms = style.transform.replace(pattern, "").trim();
         if (!value) {

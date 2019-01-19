@@ -4,6 +4,8 @@ import dom from "./dom.js";
 let canvas = dom.ui.get("canvas");
 let ctx = canvas.getContext("2d");
 
+let resolutionFactor = window.matchMedia("(-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi)").matches ? 2 : 1;
+
 /**
  * Internal data for the current plotting process
  * @property {Number} x - Current x-coordinate of the turtle
@@ -81,6 +83,7 @@ let plotter = {
         plotData.cleanCode = "";
         plotData.x = plotData.y = 0;
         ({step: plotData.step, alpha: plotData.alpha, theta: plotData.theta, iterCount: plotData.count} = ls);
+        plotData.step *= resolutionFactor;
         plotData.stack.length = 0;
         plotData.left = plotData.top = Number.MAX_VALUE;
         plotData.right = plotData.bottom = -Number.MAX_VALUE;
