@@ -580,16 +580,14 @@ let bankData = {
 
     Shapes: {
         "Sierpinski carpet": {
-            axiom: "FXF--FF--FF",
+            axiom: "F+F+F",
             rules: {
-                F: "FF",
-                X: "--FXF++FXF++FXF--",
-                Y: "-FX-Y"
+                F: "F[+F]F"
             },
-            alpha: 0,
-            theta: 60,
-            iterCount: 5,
-            step: 7
+            alpha: 180,
+            theta: 120,
+            iterCount: 6,
+            step: 8
         },
 
         mosaic: {
