@@ -1,14 +1,14 @@
-import dom from "../dom.js";
-import ls from "../ls.js";
-import plotter from "../plotter.js";
-import channel from "../channel.js";
+import {ui, on} from "../dom.js";
+import {ls} from "../ls.js";
+import {plotter} from "../plotter.js";
+import {subscribe} from "../channel.js";
 
-let panel = dom.ui.get(".panels").get("settings");
-let popup = dom.ui.get("letterPopup");
+let panel = ui.get("settings.panels");
+let popup = ui.get("letterPopup");
 let rulesBlock = panel.querySelector(".ls-rules");
 
 let ruleCtrl = {
-    tpl: dom.ui.get("ruleTpl"),
+    tpl: ui.get("ruleTpl"),
 
     delete(letter) {
         if (ls.deleteRule(letter)) {
@@ -123,11 +123,11 @@ let handlers = {
         let rules = new Map(ruleFields.map(field => [field.dataset.letter, field.value.toUpperCase()]));
         try {
             ls.reset();
-            ls.axiom = dom.ui.get("axiom").value.toUpperCase();
-            ls.alpha = -dom.ui.get("alpha").value * Math.PI / 180;
-            ls.theta = dom.ui.get("theta").value * Math.PI / 180;
-            ls.step = Number(dom.ui.get("step").value);
-            ls.iterCount = Number(dom.ui.get("iterCount").value);
+            ls.axiom = ui.get("axiom").value.toUpperCase();
+            ls.alpha = -ui.get("alpha").value * Math.PI / 180;
+            ls.theta = ui.get("theta").value * Math.PI / 180;
+            ls.step = Number(ui.get("step").value);
+            ls.iterCount = Number(ui.get("iterCount").value);
             ls.setRules(rules);
         } catch (ex) {
             alert(ex.message);
@@ -137,26 +137,26 @@ let handlers = {
     },
 
     syncLSystem() {
-        dom.ui.get("axiom").value = ls.axiom;
-        dom.ui.get("alpha").value = (-ls.alpha * 180 / Math.PI).toFixed(3);
-        dom.ui.get("theta").value = (ls.theta * 180 / Math.PI).toFixed(3);
-        dom.ui.get("step").value = ls.step;
-        dom.ui.get("iterCount").value = ls.iterCount;
+        ui.get("axiom").value = ls.axiom;
+        ui.get("alpha").value = (-ls.alpha * 180 / Math.PI).toFixed(3);
+        ui.get("theta").value = (ls.theta * 180 / Math.PI).toFixed(3);
+        ui.get("step").value = ls.step;
+        ui.get("iterCount").value = ls.iterCount;
         ruleCtrl.sync();
     }
 };
 
-dom.ui.get("addRule").addEventListener("click", handlers.clickAddRule);
+on("addRule", "click", handlers.clickAddRule);
 
-rulesBlock.addEventListener("keydown", e => {
+on(rulesBlock, "keydown", e => {
     let method = `keyDown${e.key}`;
     if (handlers.hasOwnProperty(method)) {
         handlers[method](e);
     }
 });
 
-rulesBlock.addEventListener("click", handlers.clickRuleLetter);
-popup.addEventListener("click", handlers.clickPopupBtn);
-dom.ui.get("plot").addEventListener("click", handlers.clickPlot);
+on(rulesBlock, "click", handlers.clickRuleLetter);
+on(popup, "click", handlers.clickPopupBtn);
+on("plot", "click", handlers.clickPlot);
 
-channel.subscribe("LSystemConfigured", handlers.syncLSystem);
+subscribe("LSystemConfigured", handlers.syncLSystem);

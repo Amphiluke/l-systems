@@ -1,8 +1,8 @@
-import dom from "../dom.js";
-import plotter from "../plotter.js";
+import {ui, on} from "../dom.js";
+import {plotter} from "../plotter.js";
 
-let panel = dom.ui.get(".panels").get("appearance");
-let mainArea = dom.ui.get("mainArea");
+let panel = ui.get("appearance.panels");
+let mainArea = ui.get("mainArea");
 
 let appearanceCtrl = {
     setFg(color) {
@@ -44,7 +44,7 @@ let handlers = {
     },
 
     toggleTransparency(e) {
-        let bgInput = dom.ui.get("bgClr");
+        let bgInput = ui.get("bgClr");
         let transparent = bgInput.disabled = e.target.checked;
         appearanceCtrl.setBg(transparent ? "transparent" : bgInput.value);
     },
@@ -57,8 +57,8 @@ let handlers = {
     }
 };
 
-dom.ui.get("fgClr").addEventListener("change", handlers.changeFg);
-dom.ui.get("bgClr").addEventListener("change", handlers.changeBg);
-dom.ui.get("noBgClr").addEventListener("change", handlers.toggleTransparency);
+on("fgClr", "change", handlers.changeFg);
+on("bgClr", "change", handlers.changeBg);
+on("noBgClr", "change", handlers.toggleTransparency);
 
-panel.addEventListener("change", handlers.changeTransform);
+on(panel, "change", handlers.changeTransform);

@@ -1,4 +1,4 @@
-import validator from "./validator.js";
+import * as validator from "./validator.js";
 
 const ctrlRuleList = [["F", ""], ["B", ""], ["+", "+"], ["-", "-"], ["[", "["], ["]", "]"]];
 
@@ -136,4 +136,4 @@ let ls = {
 
 ls.reset();
 
-export default ls;
+export {ls};

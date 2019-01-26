@@ -21,7 +21,7 @@ I apologize to the authors of L-systems going without any attribution.
 Any help with affiliation of those L-systems is appreciated.
 */
 
-export default {
+let bankData = {
     Plants: {
         "bush 1": {
             axiom: "F",
@@ -872,3 +872,5 @@ export default {
         }
     }
 };
+
+export {bankData};

@@ -71,6 +71,16 @@
         }
     }
 
+    .ls-btn-row {
+        display:flex;
+        justify-content:space-between;
+        button {
+            flex-grow:1;
+            &:not(:first-of-type) {
+                margin-left:5px;
+            }
+        }
+    }
     .ls-note {
         color:#999;
         font-size:0.8em;
@@ -114,7 +124,7 @@
 }
 
 .tab-panel-highlight(@panel) {
-    .ls-panel-open[data-ls-id^="@{panel}"] ~ .ls-tabs [data-ls-ref="@{panel}"] {
+    .ls-panel-open[data-lsid^="@{panel}"] ~ .ls-tabs [data-ls-ref="@{panel}"] {
         background:#d5d5d5;
     }
 }

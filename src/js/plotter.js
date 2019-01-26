@@ -1,7 +1,7 @@
-import ls from "./ls.js";
-import dom from "./dom.js";
+import {ls} from "./ls.js";
+import {ui} from "./dom.js";
 
-let canvas = dom.ui.get("canvas");
+let canvas = ui.get("canvas");
 let ctx = canvas.getContext("2d");
 
 let resolutionFactor = window.matchMedia("(-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi)").matches ? 2 : 1;
@@ -157,23 +157,4 @@ let plotter = {
     }
 };
 
-export default plotter;
-
-{
-    let debounceTimer = null;
-    let repaint = () => {
-        debounceTimer = null;
-        canvas.width = canvas.offsetWidth;
-        canvas.height = canvas.offsetHeight;
-        plotter.repaint();
-    };
-
-    window.addEventListener("resize", () => {
-        if (debounceTimer !== null) {
-            clearTimeout(debounceTimer);
-        }
-        debounceTimer = setTimeout(repaint, 100);
-    });
-
-    repaint();
-}
+export {plotter};

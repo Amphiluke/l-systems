@@ -1,0 +1,9 @@
+.plus(@thickness: 2px; @color: currentColor) {
+    @half-thickness: @thickness / 2;
+    background:linear-gradient(0deg, transparent calc(50% - @half-thickness), @color 0, @color calc(50% + @half-thickness), transparent 0), linear-gradient(90deg, transparent calc(50% - @half-thickness), @color 0, @color calc(50% + @half-thickness), transparent 0);
+}
+
+.cross(@thickness: 2px; @color: currentColor; @angle: 45deg) {
+    .plus(@thickness; @color);
+    transform:rotate(@angle);
+}

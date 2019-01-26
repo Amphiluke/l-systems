@@ -7,7 +7,7 @@
     "postinstall": "lessc --clean-css=\"--advanced\" src/css/main.less src/css/main.css",
     "lint": "eslint src/js/**/*.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "rollup -c && copyfiles -u 1 src/css/main.css src/index.html build"
+    "build": "rollup -c && lessc --clean-css=\"--advanced\" src/css/main.less build/css/main.css && copyfiles -u 1 src/index.html build"
   },
   "repository": {
     "type": "git",

@@ -1,23 +1,24 @@
-import bankData from "../bank.js";
-import ls from "../ls.js";
-import dom from "../dom.js";
-import channel from "../channel.js";
-import plotter from "../plotter.js";
+import {bankData} from "../bank.js";
+import {ls} from "../ls.js";
+import {ui, on} from "../dom.js";
+import {publish} from "../channel.js";
+import {plotter} from "../plotter.js";
+import {copy} from "../clipboard.js";
 
 let bank = new Map();
 
 let collectionCtrl = {
     get current() {
-        return dom.ui.get("collections").value;
+        return ui.get("collections").value;
     },
     set current(name) {
-        dom.ui.get("collections").value = name;
+        ui.get("collections").value = name;
         collectionCtrl.fillLSystemList();
         collectionCtrl.updateControlStates();
     },
 
     fillBank() {
-        dom.ui.get("collections").length = 0;
+        ui.get("collections").length = 0;
 
         // Load built in collections
         for (let collName of Object.keys(bankData).sort()) {
@@ -36,11 +37,9 @@ let collectionCtrl = {
     },
 
     fillLSystemList(collection = collectionCtrl.current) {
-        let html = "";
-        for (let name of bank.get(collection).keys()) {
-            html += `<option>${name}</option>`;
-        }
-        let select = dom.ui.get("lSystems");
+        let html = [...bank.get(collection).keys()]
+            .reduce((memo, name) => `${memo}<option>${name}</option>`, "");
+        let select = ui.get("lSystems");
         select.innerHTML = html;
         select.selectedIndex = 0;
     },
@@ -68,7 +67,7 @@ let collectionCtrl = {
         bank.set(name, collection);
         let option = document.createElement("option");
         option.text = name;
-        dom.ui.get("collections").children[userDefined ? 1 : 0].appendChild(option);
+        ui.get("collections").children[userDefined ? 1 : 0].appendChild(option);
         if (setCurrent) {
             collectionCtrl.current = name;
         }
@@ -82,7 +81,7 @@ let collectionCtrl = {
         if (collection === collectionCtrl.current) {
             collectionCtrl.current = bank.keys().next().value;
         }
-        let select = dom.ui.get("collections");
+        let select = ui.get("collections");
         select.children[1].removeChild([...select.options].find(option => option.text === collection));
     },
 
@@ -95,7 +94,7 @@ let collectionCtrl = {
             throw new Error("Built in collections cannot be modified");
         }
         bank.get(collection).delete(name);
-        let select = dom.ui.get("lSystems");
+        let select = ui.get("lSystems");
         select.removeChild([...select.options].find(option => option.text === name));
     },
 
@@ -115,12 +114,16 @@ let collectionCtrl = {
         collection.set(name, lSystem);
         let option = document.createElement("option");
         option.text = name;
-        dom.ui.get("lSystems").add(option);
+        ui.get("lSystems").add(option);
     },
 
     updateControlStates() {
-        dom.ui.get("deleteColl").disabled = dom.ui.get("addLS").disabled =
-            dom.ui.get("removeLS").disabled = !collectionCtrl.isUserDefined();
+        let isUserDefined = collectionCtrl.isUserDefined();
+        let panel = ui.get("collections.panels");
+        [...panel.querySelectorAll("[data-for='userDefined']")]
+            .forEach(el => el.disabled = !isUserDefined);
+        [...panel.querySelectorAll("[data-for='builtIn']")]
+            .forEach(el => el.disabled = isUserDefined);
     },
 
     storeUserCollections() {
@@ -148,8 +151,8 @@ let collectionCtrl = {
     plainToCollection(plain) {
         let collection = new Map();
         for (let itemName of Object.keys(plain).sort()) {
-            let params = plain[itemName];
-            params.rules = new Map(Object.keys(params.rules).map(letter => [letter, params.rules[letter]]));
+            let params = Object.assign({}, plain[itemName]);
+            params.rules = new Map(Object.entries(params.rules));
             collection.set(itemName, params);
         }
         return collection;
@@ -166,6 +169,13 @@ let collectionCtrl = {
 };
 
 collectionCtrl.fillBank();
+if (/[?&]ls=([^&]+)/.exec(location.search)) {
+    let [collectionName, lSystemName] = decodeURIComponent(RegExp.$1).split("#");
+    if (bank.has(collectionName) && bank.get(collectionName).has(lSystemName)) {
+        collectionCtrl.current = collectionName;
+        ui.get("lSystems").value = lSystemName;
+    }
+}
 
 
 let handlers = {
@@ -173,20 +183,42 @@ let handlers = {
         collectionCtrl.current = e.target.value;
     },
 
-    dblClickLSystem(e) {
-        collectionCtrl.setupLSystem(e.target.value);
-        channel.publish("LSystemConfigured");
+    clickExplore() {
+        collectionCtrl.setupLSystem(ui.get("lSystems").value);
+        publish("LSystemConfigured");
+    },
+
+    clickView() {
+        collectionCtrl.setupLSystem(ui.get("lSystems").value);
+        plotter.plot();
+    },
+
+    clickPermalink() {
+        let collectionName = collectionCtrl.current;
+        let lSystemName = ui.get("lSystems").value;
+        let link = `${location.origin}${location.pathname}?ls=` +
+            encodeURIComponent(`${collectionName}#${lSystemName}`);
+        copy(link)
+            .then(() => {
+                ui.get("permalink.clipboard").classList.add("copied");
+            })
+            .catch(() => {
+                ui.get("permalink.clipboard").classList.add("failed");
+            })
+            .then(() => {
+                setTimeout(() => {
+                    ui.get("permalink.clipboard").classList.remove("copied", "failed");
+                }, 2000);
+            });
     },
 
     keyDownLSystem({key, target}) {
         switch (key) {
             case "Enter":
-                collectionCtrl.setupLSystem(target.value);
-                channel.publish("LSystemConfigured");
+                handlers.clickExplore();
                 break;
             case " ":
-                collectionCtrl.setupLSystem(target.value);
-                plotter.plot();
+                handlers.clickView();
                 break;
             case "Delete":
                 if (collectionCtrl.isUserDefined() && window.confirm("Delete the selected L-system?")) {
@@ -217,7 +249,7 @@ let handlers = {
     },
 
     clickRemoveLS() {
-        let select = dom.ui.get("lSystems");
+        let select = ui.get("lSystems");
         if (select.selectedIndex >= 0 && collectionCtrl.isUserDefined() &&
             window.confirm("Delete the selected L-system?")) {
             collectionCtrl.deleteLSystem(select.value);
@@ -250,17 +282,21 @@ let handlers = {
     }
 };
 
-dom.ui.get("collections").addEventListener("change", handlers.changeCollection);
-dom.ui.get("lSystems").addEventListener("dblclick", handlers.dblClickLSystem);
-dom.ui.get("lSystems").addEventListener("keydown", handlers.keyDownLSystem);
+on("collections", "change", handlers.changeCollection);
+on("lSystems", "keydown", handlers.keyDownLSystem);
+on("lSystems", "dblclick", handlers.clickExplore);
+on("explore", "click", handlers.clickExplore);
+on("view", "click", handlers.clickView);
 
-dom.ui.get("createColl").addEventListener("click", handlers.clickCreateCollection);
-dom.ui.get("deleteColl").addEventListener("click", handlers.clickDeleteCollection);
+on(ui.get("permalink.clipboard"), "click", handlers.clickPermalink);
 
-dom.ui.get("addLS").addEventListener("click", handlers.clickAddLS);
-dom.ui.get("removeLS").addEventListener("click", handlers.clickRemoveLS);
+on("createColl", "click", handlers.clickCreateCollection);
+on("deleteColl", "click", handlers.clickDeleteCollection);
 
-dom.ui.get("importColl").addEventListener("change", handlers.changeImport);
-dom.ui.get("exportColl").addEventListener("mousedown", handlers.mouseDownExport);
+on("addLS", "click", handlers.clickAddLS);
+on("removeLS", "click", handlers.clickRemoveLS);
 
-window.addEventListener("beforeunload", handlers.beforeUnload);
+on("importColl", "change", handlers.changeImport);
+on("exportColl", "mousedown", handlers.mouseDownExport);
+
+on(window, "beforeunload", handlers.beforeUnload);
