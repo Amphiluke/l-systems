@@ -2,7 +2,8 @@
 
 .ls-collection-list-ctrls {
     display:flex;
-    select {
+    [data-lsid="collections"],
+    [data-lsid="searchLS"] {
         flex-grow:1;
     }
     button {
@@ -11,6 +12,9 @@
         padding:0 5px;
         position:relative;
         width:25px;
+    }
+    [data-lsid="createColl"],
+    [data-lsid="deleteColl"] {
         &:before {
             content:"\A0";
             display:inline-block;
@@ -21,17 +25,58 @@
             top:50%;
             width:10px;
         }
-        &[data-lsid="createColl"]:before {
-            .plus(2px; #080);
+    }
+    [data-lsid="createColl"]:before {
+        .plus(2px; #080);
+    }
+    [data-lsid="deleteColl"] {
+        color:#b00;
+        &:disabled {
+            color:#777;
         }
-        &[data-lsid="deleteColl"] {
-            color:#b00;
-            &:disabled {
-                color:#777;
-            }
-            &:before {
-                .cross(2px);
-            }
+        &:before {
+            .cross(2px);
+        }
+    }
+    [data-lsid="toggleSearch"] {
+        color:#ccc;
+        &:before,
+        &:after {
+            content:"\A0";
+            left:50%;
+            position:absolute;
+            top:50%;
+        }
+        &:before {
+            background:#444;
+            height:14px;
+            transform:translate(-50%, -50%) rotate(45deg);
+            width:2px;
+        }
+        &:after {
+            background:radial-gradient(circle at 60% 30%, #fff, #fff 1px, currentColor 0);
+            border:1px solid #444;
+            border-radius:50%;
+            box-sizing:border-box;
+            height:9px;
+            transform:translate(-50%, -50%) translate(2px, -2px);
+            width:9px;
+        }
+    }
+
+    .ls-panel-collections:not(.ls-search-mode) & {
+        [data-lsid="searchLS"] {
+            display:none;
+        }
+    }
+    .ls-panel-collections.ls-search-mode & {
+        [data-lsid="collections"],
+        [data-lsid="createColl"],
+        [data-lsid="deleteColl"] {
+            display:none;
+        }
+        [data-lsid="toggleSearch"] {
+            color:#87ceeb;
         }
     }
 }

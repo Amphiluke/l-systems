@@ -9,7 +9,9 @@ const defaults = {
     iterCount: 3
 };
 
-let axiom, rules, settings;
+let axiom;
+let rules;
+let settings;
 
 let ls = {
     // The initial code (an axiom)
@@ -79,7 +81,7 @@ let ls = {
 
     // Productions for each symbol in the axiom
     get rules() {
-        let ruleList = [...rules].filter(([key]) => key >= "A" && key <= "Z");
+        let ruleList = [...rules].filter(([key]) => /[A-Z]/.test(key));
         return new Map(ruleList);
     },
     setRule(production, letter) {
@@ -94,14 +96,10 @@ let ls = {
         rules.set(letter, production);
     },
     setRules(productions) {
-        productions.forEach(this.setRule, this);
+        productions.forEach(ls.setRule, ls);
     },
     deleteRule(letter) {
-        if (letter !== "F" && letter !== "B" && rules.has(letter)) {
-            rules.delete(letter);
-            return true;
-        }
-        return false;
+        return (letter === "F" || letter === "B") ? false : rules.delete(letter);
     },
 
     get vacantLetters() {

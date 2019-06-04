@@ -8,6 +8,10 @@ export function publish(event, ...args) {
 }
 
 export function subscribe(event, handler) {
+    if (event.includes(" ")) {
+        event.split(" ").forEach(e => subscribe(e, handler));
+        return;
+    }
     let handlers = handlerRegistry.get(event);
     if (!handlers) {
         handlers = [];
@@ -17,6 +21,10 @@ export function subscribe(event, handler) {
 }
 
 export function unsubscribe(event, handler) {
+    if (event.includes(" ")) {
+        event.split(" ").forEach(e => unsubscribe(e, handler));
+        return;
+    }
     let handlers = handlerRegistry.get(event);
     if (handlers) {
         let index = handlers.indexOf(handler);

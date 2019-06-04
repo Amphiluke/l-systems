@@ -73,6 +73,10 @@
     "new-parens": [
       "error"
     ],
+    "no-console": [
+      "error",
+      {"allow":  ["error", "warn", "info"]}
+    ],
     "no-multi-spaces": [
       "error"
     ],

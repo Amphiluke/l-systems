@@ -15,8 +15,10 @@ export function checkRule(rule, msg = messages.RULE) {
     return ruleRE.test(rule) || msg;
 }
 
+let letterRE = /^[A-Z]$/;
+
 export function checkLetter(letter, msg = messages.LETTER) {
-    return ((letter.length === 1) && (letter >= "A") && (letter <= "Z")) || msg;
+    return letterRE.test(letter) || msg;
 }
 
 export function checkStep(step, msg = messages.STEP) {

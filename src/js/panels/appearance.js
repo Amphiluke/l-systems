@@ -23,7 +23,7 @@ let appearanceCtrl = {
     },
 
     setTransform(transform, value) {
-        let style = mainArea.style;
+        let {style} = mainArea;
         let {pattern, unit} = appearanceCtrl.transforms[transform];
         let otherTransforms = style.transform.replace(pattern, "").trim();
         if (!value) {
@@ -50,7 +50,7 @@ let handlers = {
     },
 
     changeTransform({target}) {
-        let transform = target.dataset.transform;
+        let {transform} = target.dataset;
         if (transform && target.validity.valid) {
             appearanceCtrl.setTransform(transform, target.value.trim());
         }
