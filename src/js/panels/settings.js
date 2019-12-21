@@ -150,7 +150,7 @@ dom.ui.get("addRule").addEventListener("click", handlers.clickAddRule);
 
 rulesBlock.addEventListener("keydown", e => {
     let method = `keyDown${e.key}`;
-    if (handlers.hasOwnProperty(method)) {
+    if (Object.prototype.hasOwnProperty.call(handlers, method)) {
         handlers[method](e);
     }
 });
