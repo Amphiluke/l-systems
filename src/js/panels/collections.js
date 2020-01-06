@@ -52,7 +52,7 @@ let collectionCtrl = {
         }
         ls.reset();
         ls.axiom = params.axiom;
-        ls.alpha = -params.alpha * Math.PI / 180;
+        ls.alpha = params.alpha * Math.PI / 180;
         ls.theta = params.theta * Math.PI / 180;
         ls.step = params.step;
         ls.iterCount = params.iterCount;
@@ -107,7 +107,7 @@ let collectionCtrl = {
         name = collectionCtrl._getValidName(name, collection);
         let lSystem = new Map();
         lSystem.axiom = ls.axiom;
-        lSystem.alpha = -ls.alpha * 180 / Math.PI;
+        lSystem.alpha = ls.alpha * 180 / Math.PI;
         lSystem.theta = ls.theta * 180 / Math.PI;
         lSystem.step = ls.step;
         lSystem.iterCount = ls.iterCount;

@@ -1,13 +1,12 @@
 {
   "name": "l-systems",
-  "version": "2.0.4",
-  "description": "Simple canvas-based L-system generator and manager",
+  "version": "3.0.0",
+  "description": "Simple SVG-based L-system generator and manager",
   "main": "src/js/index.js",
   "scripts": {
     "postinstall": "lessc src/css/main.less | cleancss -O2 -o src/css/main.css",
-    "lint": "eslint src/js/**/*.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "rollup -c && copyfiles -u 1 src/css/main.css src/index.html build"
+    "lint": "eslint src/js",
+    "build": "rollup -c && copyfiles -u 1 src/css/main.css src/index.html dist"
   },
   "repository": {
     "type": "git",
@@ -16,7 +15,7 @@
   "keywords": [
     "l-systems",
     "fractals",
-    "canvas",
+    "svg",
     "plotter"
   ],
   "author": "Amphiluke",
@@ -26,14 +25,16 @@
   },
   "homepage": "https://amphiluke.github.io/l-systems/",
   "devDependencies": {
+    "@rollup/plugin-node-resolve": "^6.1.0",
     "clean-css-cli": "^4.3.0",
     "copyfiles": "^2.1.1",
     "eslint": "^6.8.0",
     "less": "^3.10.3",
-    "rollup": "^1.27.13",
+    "rollup": "^1.28.0",
     "rollup-plugin-terser": "^5.1.3"
   },
   "dependencies": {
+    "lindsvg": "^1.0.0",
     "normalize.css": "^8.0.1"
   }
 }

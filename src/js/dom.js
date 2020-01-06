@@ -26,4 +26,6 @@ for (let el of document.body.querySelectorAll("[data-ls-id]")) {
     dom.cache(el, el.dataset.lsId);
 }
 
+dom.cache(document.getElementById("svg"), "svg");
+
 export default dom;

@@ -1,11 +1,12 @@
 @import (inline) "../../node_modules/normalize.css/normalize.css";
+@import (reference) "vars";
 
 body {
     font:92%/1.25 Arial,sans-serif;
 }
 
 a {
-    color:#060;
+    color:@color-green-dark;
 }
 
 button{
@@ -17,13 +18,13 @@ button{
     }
 }
 
-canvas {
+svg {
+    left:calc(50% + round(@sidebar-width / 2));
+    max-height:100vh;
+    max-width:calc(100vw - @sidebar-width);
     position:fixed;
-    height:100%;
-    left:25px;
-    top:0;
-    transition:transform 0.25s;
-    width:~"calc(100% - 25px)";
+    top:50%;
+    transform:translate(-50%, -50%);
 }
 
 @import "sidebar";

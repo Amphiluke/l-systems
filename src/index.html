@@ -6,16 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimal-ui">
     <link rel="icon" type="image/png" href="../favicon.png">
     <link rel="stylesheet" href="css/main.css">
-    <meta name="description" content="Simple canvas-based L-system generator and manager">
+    <meta name="description" content="Simple SVG-based L-system generator and manager">
     <meta property="og:url" content="https://amphiluke.github.io/l-systems/">
     <meta property="og:type" content="website">
     <meta property="og:title" content="L-systems">
     <meta property="og:image" content="https://amphiluke.github.io/l-systems/img/preview.png">
-    <meta property="og:description" content="Simple canvas-based L-system generator and manager">
+    <meta property="og:description" content="Simple SVG-based L-system generator and manager">
 </head>
 <body>
 
-    <canvas data-ls-id="canvas"></canvas>
+    <svg id="svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" width="10" height="10">
+        <path d="M0 0" fill="none" stroke="#008000"></path>
+    </svg>
 
     <section class="ls-sidebar">
         <form action="#" class="ls-panel ls-panel-collections" data-ls-id="collections.panels" autocomplete="off">
@@ -100,24 +102,12 @@
                 <label><input type="checkbox" data-ls-id="noBgClr" checked> Transparent</label><br>
                 <label>Color <input type="color" value="#ffffff" data-ls-id="bgClr" title="Background color" disabled></label>
             </fieldset>
-            <fieldset>
-                <legend>Transformations</legend>
-                <label data-mark="φ"><input type="text" data-transform="rotate" placeholder="Rotation angle, deg." title="Rotation angle, deg." pattern="-?\d+(\.\d+)?"></label>
-                <label data-mark="x"><input type="number" data-transform="translateX" placeholder="X translation, px" title="X translation, px"></label>
-                <label data-mark="y"><input type="number" data-transform="translateY" placeholder="Y translation, px" title="Y translation, px"></label>
-                <label data-mark="±"><input type="number" min="0.1" max="10" step="0.1" data-transform="scale" placeholder="Scaling factor" title="Scaling factor, 0.1 ≤ N ≤ 10"></label>
-            </fieldset>
         </form>
 
         <form action="#" class="ls-panel ls-panel-exporting" data-ls-id="exporting.panels" autocomplete="off">
             <fieldset>
                 <legend>Export as an image</legend>
-                <div class="ls-export-controls">
-                    <a href="#" data-ls-id="exportImg" class="ls-" target="_blank" download>Download PNG…</a>
-                    <button type="button" data-mime-type="image/png">PNG</button>
-                    <button type="button" data-mime-type="image/gif">GIF</button>
-                    <button type="button" data-mime-type="image/jpeg">JPG</button>
-                </div>
+                <a href="#" data-ls-id="exportImg" class="ls-" target="_blank" download="l-system.svg">Download SVG…</a>
             </fieldset>
             <hr>
             <button type="button" data-ls-id="makeLink">Generate a link</button>
@@ -136,7 +126,7 @@
         <footer class="ls-about">
             L-system plotter &amp; manager by Amphiluke<br>
             <a href="https://github.com/Amphiluke/l-systems" target="_blank">Project on GitHub</a><br>
-            © 2012–2019
+            © 2012–2020
         </footer>
     </section>
 

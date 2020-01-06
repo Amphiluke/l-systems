@@ -1,11 +1,13 @@
+@import (reference) "vars";
+
 .ls-sidebar {
-    background:#eee;
-    border-right:1px solid #d5d5d5;
+    background:@color-gray-lighter;
+    border-right:1px solid @color-gray-light;
     display:flex;
     flex-direction:column;
     height:100vh;
     left:0;
-    min-width:24px;
+    min-width:@sidebar-width;
     overflow:auto;
     position:fixed;
     top:0;
@@ -15,7 +17,7 @@
     box-sizing:border-box;
     display:none;
     flex-grow:1;
-    padding:10px 10px 10px 24px + 10px;
+    padding:10px 10px 10px @sidebar-width + 10px;
     width:300px;
 
     &-open {
@@ -23,7 +25,7 @@
     }
 
     fieldset {
-        border:1px #d5d5d5;
+        border:1px @color-gray-light;
         border-style:solid none none;
         margin:1em 0;
         padding:0.5em 0;
@@ -43,7 +45,7 @@
     }
 
     hr {
-        border:solid #d5d5d5;
+        border:solid @color-gray-light;
         border-width:1px 0 0;
     }
 
@@ -51,9 +53,9 @@
         display:block;
         position:relative;
         &:before {
-            background:#eee;
+            background:@color-gray-lighter;
             border-radius:3px;
-            box-shadow:0 0 2px 0 #777 inset;
+            box-shadow:0 0 2px 0 @color-gray-dark inset;
             box-sizing:border-box;
             content:attr(data-mark);
             font:bold 12px/1 Arial,sans-serif;
@@ -73,7 +75,7 @@
     }
 
     .ls-note {
-        color:#999;
+        color:@color-gray-normal;
         font-size:0.8em;
         line-height:1.1;
         margin:0;
@@ -81,14 +83,14 @@
 }
 
 .ls-tabs {
-    background:#eee;
-    border-right:1px solid #d5d5d5;
+    background:@color-gray-lighter;
+    border-right:1px solid @color-gray-light;
     cursor:default;
     height:100vh;
     left:0;
     position:fixed;
     top:0;
-    width:24px;
+    width:@sidebar-width;
     z-index:2;
 
     fieldset {
@@ -103,20 +105,20 @@
     button {
         background:none;
         border:none;
-        height:24px;
-        line-height:24px;
+        height:@sidebar-width;
+        line-height:@sidebar-width;
         padding:0 0.4em;
         transform:rotate(180deg);
         &:hover,
         &.ls-active {
-            background:#d5d5d5;
+            background:@color-gray-light;
         }
     }
 }
 
 .tab-panel-highlight(@panel) {
     .ls-panel-open[data-ls-id^="@{panel}"] ~ .ls-tabs [data-ls-ref="@{panel}"] {
-        background:#d5d5d5;
+        background:@color-gray-light;
     }
 }
 .tab-panel-highlight(collections);
@@ -125,18 +127,18 @@
 .tab-panel-highlight(exporting);
 
 .ls-about {
-    color:fade(#000, 50%);
+    color:@color-gray-normal;
     display:none;
     flex-shrink:0;
     font-size:0.75em;
-    padding:10px 10px 10px 24px + 10px;
+    padding:10px 10px 10px @sidebar-width + 10px;
 
     .ls-panel-open ~ & {
         display:block;
     }
 
     a:not(:hover) {
-        color:fade(#060, 50%);
+        color:fade(@color-green-dark, 50%);
     }
 }
 

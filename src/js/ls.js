@@ -115,18 +115,6 @@ let ls = {
         return vacant;
     },
 
-    getCode() {
-        let code = axiom;
-        for (let count = settings.iterCount; count > 0; count--) {
-            let newCode = "";
-            for (let letter of code) {
-                newCode += rules.get(letter) || "";
-            }
-            code = newCode;
-        }
-        return code;
-    },
-
     reset() {
         axiom = "";
         settings = Object.assign({}, defaults);

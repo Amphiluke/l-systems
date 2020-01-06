@@ -124,7 +124,7 @@ let handlers = {
         try {
             ls.reset();
             ls.axiom = dom.ui.get("axiom").value.toUpperCase();
-            ls.alpha = -dom.ui.get("alpha").value * Math.PI / 180;
+            ls.alpha = dom.ui.get("alpha").value * Math.PI / 180;
             ls.theta = dom.ui.get("theta").value * Math.PI / 180;
             ls.step = Number(dom.ui.get("step").value);
             ls.iterCount = Number(dom.ui.get("iterCount").value);
@@ -138,7 +138,7 @@ let handlers = {
 
     syncLSystem() {
         dom.ui.get("axiom").value = ls.axiom;
-        dom.ui.get("alpha").value = (-ls.alpha * 180 / Math.PI).toFixed(3);
+        dom.ui.get("alpha").value = (ls.alpha * 180 / Math.PI).toFixed(3);
         dom.ui.get("theta").value = (ls.theta * 180 / Math.PI).toFixed(3);
         dom.ui.get("step").value = ls.step;
         dom.ui.get("iterCount").value = ls.iterCount;

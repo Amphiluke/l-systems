@@ -3,33 +3,14 @@ import ls from "../ls.js";
 import channel from "../channel.js";
 import plotter from "../plotter.js";
 
-let panel = dom.ui.get(".panels").get("exporting"),
-    exportLink = dom.ui.get("exportImg"),
-    canvas = dom.ui.get("canvas");
-
 let exportCtrl = {
-    makeImgLink(mimeType = "image/png") {
-        URL.revokeObjectURL(exportLink.href);
-        canvas.toBlob(blob => {
-            let ext = mimeType.slice(mimeType.lastIndexOf("/") + 1);
-            exportLink.href = URL.createObjectURL(blob);
-            exportLink.download = `l-system.${ext}`;
-            exportLink.innerHTML = `Download ${ext.toUpperCase()}…`;
-            panel.classList.add("ls-export-requested");
-        }, mimeType);
-    },
-
-    unmakeImgLink() {
-        panel.classList.remove("ls-export-requested");
-    },
-
     getLSystemLink() {
         let link = `${location.origin}${location.pathname}?~ls~=`;
         link += `ax${encodeURIComponent(ls.axiom)}~`;
         for (let [letter, rule] of ls.rules) {
             link += `r${letter}${encodeURIComponent(rule)}~`;
         }
-        link += `al${(-ls.alpha * 180 / Math.PI).toFixed(3)}~`;
+        link += `al${(ls.alpha * 180 / Math.PI).toFixed(3)}~`;
         link += `th${(ls.theta * 180 / Math.PI).toFixed(3)}~`;
         link += `it${ls.iterCount}~`;
         link += `st${ls.step}`;
@@ -50,7 +31,7 @@ let exportCtrl = {
                     ls.axiom = value;
                     break;
                 case "al":
-                    ls.alpha = -value * Math.PI / 180;
+                    ls.alpha = value * Math.PI / 180;
                     break;
                 case "th":
                     ls.theta = value * Math.PI / 180;
@@ -74,13 +55,10 @@ let exportCtrl = {
 };
 
 let handlers = {
-    clickExportControl(e) {
-        let target = e.target;
-        if (target === exportLink) {
-            exportCtrl.unmakeImgLink();
-        } else if (target.dataset.mimeType) {
-            exportCtrl.makeImgLink(target.dataset.mimeType);
-        }
+    mouseDownExport({target}) {
+        URL.revokeObjectURL(target.href);
+        let blob = new Blob([dom.ui.get("svg").outerHTML], {type: "image/svg+xml"});
+        target.href = URL.createObjectURL(blob);
     },
 
     clickMakeLink() {
@@ -95,7 +73,7 @@ let handlers = {
     }
 };
 
-panel.querySelector(".ls-export-controls").addEventListener("click", handlers.clickExportControl);
+dom.ui.get("exportImg").addEventListener("mousedown", handlers.mouseDownExport);
 dom.ui.get("makeLink").addEventListener("click", handlers.clickMakeLink);
 dom.ui.get("linkAddress").addEventListener("focus", handlers.focusLinkAddress);
 

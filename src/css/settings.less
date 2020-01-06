@@ -1,3 +1,5 @@
+@import (reference) "vars";
+
 [data-ls-id="axiom"],
 .ls-rules [data-letter] {
     text-transform:uppercase;
@@ -25,7 +27,7 @@
 }
 
 .ls-letter-popup {
-    background:#eee;
+    background:@color-gray-lighter;
     display:none;
     margin-top:-4px;
     position:absolute;
@@ -36,11 +38,11 @@
     }
 
     button {
-        background:#eee;
-        border:1px solid #d5d5d5;
-        box-shadow:0 0 3px 0 #777 inset;
+        background:@color-gray-lighter;
+        border:1px solid @color-gray-light;
+        box-shadow:0 0 3px 0 @color-gray-dark inset;
         box-sizing:border-box;
-        color:#333;
+        color:@color-gray-darker;
         cursor:pointer;
         float:left;
         font:bold 14px/1.75 Arial,sans-serif;
