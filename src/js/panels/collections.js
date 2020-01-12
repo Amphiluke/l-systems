@@ -55,7 +55,7 @@ let collectionCtrl = {
         ls.alpha = params.alpha * Math.PI / 180;
         ls.theta = params.theta * Math.PI / 180;
         ls.step = params.step;
-        ls.iterCount = params.iterCount;
+        ls.iterations = params.iterations;
         ls.setRules(params.rules);
     },
 
@@ -110,7 +110,7 @@ let collectionCtrl = {
         lSystem.alpha = ls.alpha * 180 / Math.PI;
         lSystem.theta = ls.theta * 180 / Math.PI;
         lSystem.step = ls.step;
-        lSystem.iterCount = ls.iterCount;
+        lSystem.iterations = ls.iterations;
         lSystem.rules = ls.rules;
         collection.set(name, lSystem);
         let option = document.createElement("option");
@@ -137,7 +137,7 @@ let collectionCtrl = {
         let plain = {};
         for (let [name, params] of bank.get(collection)) {
             let data = plain[name] = {rules: {}};
-            ({axiom: data.axiom, alpha: data.alpha, theta: data.theta, iterCount: data.iterCount, step: data.step} = params);
+            ({axiom: data.axiom, alpha: data.alpha, theta: data.theta, iterations: data.iterations, step: data.step} = params);
             for (let [letter, rule] of params.rules) {
                 data.rules[letter] = rule;
             }

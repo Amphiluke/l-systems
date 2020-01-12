@@ -30,7 +30,7 @@ export default {
             },
             alpha: 90,
             theta: 35,
-            iterCount: 4,
+            iterations: 4,
             step: 6
         },
 
@@ -41,7 +41,7 @@ export default {
             },
             alpha: 90,
             theta: 22.5,
-            iterCount: 4,
+            iterations: 4,
             step: 9
         },
 
@@ -53,7 +53,7 @@ export default {
             },
             alpha: 90,
             theta: 20,
-            iterCount: 7,
+            iterations: 7,
             step: 2
         },
 
@@ -65,7 +65,7 @@ export default {
             },
             alpha: 90,
             theta: 25,
-            iterCount: 6,
+            iterations: 6,
             step: 3
         },
 
@@ -76,7 +76,7 @@ export default {
             },
             alpha: 90,
             theta: 20,
-            iterCount: 5,
+            iterations: 5,
             step: 8
         },
 
@@ -88,7 +88,7 @@ export default {
             },
             alpha: 90,
             theta: 25.71,
-            iterCount: 6,
+            iterations: 6,
             step: 3.5
         },
 
@@ -99,7 +99,7 @@ export default {
             },
             alpha: 0,
             theta: 20,
-            iterCount: 3,
+            iterations: 3,
             step: 3
         },
 
@@ -110,7 +110,7 @@ export default {
             },
             alpha: 0,
             theta: 20,
-            iterCount: 3,
+            iterations: 3,
             step: 3
         },
 
@@ -123,7 +123,7 @@ export default {
             },
             alpha: 90,
             theta: 20,
-            iterCount: 4,
+            iterations: 4,
             step: 0.5
         },
 
@@ -136,7 +136,7 @@ export default {
             },
             alpha: 90,
             theta: 20,
-            iterCount: 4,
+            iterations: 4,
             step: 2
         },
 
@@ -147,7 +147,7 @@ export default {
             },
             alpha: 0,
             theta: 20,
-            iterCount: 5,
+            iterations: 5,
             step: 15
         },
 
@@ -158,7 +158,7 @@ export default {
             },
             alpha: 90,
             theta: 25.714,
-            iterCount: 5,
+            iterations: 5,
             step: 2
         },
 
@@ -169,7 +169,7 @@ export default {
             },
             alpha: 90,
             theta: 11.25,
-            iterCount: 3,
+            iterations: 3,
             step: 15
         },
 
@@ -185,7 +185,7 @@ export default {
             },
             alpha: 90,
             theta: 20,
-            iterCount: 9,
+            iterations: 9,
             step: 10
         },
 
@@ -218,7 +218,7 @@ export default {
             },
             alpha: 90,
             theta: 12,
-            iterCount: 17,
+            iterations: 17,
             step: 2
         },
 
@@ -254,7 +254,7 @@ export default {
             },
             alpha: 90,
             theta: 12,
-            iterCount: 17,
+            iterations: 17,
             step: 2
         },
 
@@ -269,7 +269,7 @@ export default {
             },
             alpha: 0,
             theta: 11.25,
-            iterCount: 20,
+            iterations: 20,
             step: 1.2
         },
 
@@ -282,7 +282,7 @@ export default {
             },
             alpha: 0,
             theta: 25.7,
-            iterCount: 6,
+            iterations: 6,
             step: 4
         },
 
@@ -295,7 +295,7 @@ export default {
             },
             alpha: 90,
             theta: 15,
-            iterCount: 6,
+            iterations: 6,
             step: 6
         },
 
@@ -308,7 +308,7 @@ export default {
             },
             alpha: 90,
             theta: 15,
-            iterCount: 6,
+            iterations: 6,
             step: 10
         },
 
@@ -323,7 +323,7 @@ export default {
             },
             alpha: 90,
             theta: 10,
-            iterCount: 9,
+            iterations: 9,
             step: 4.5
         },
 
@@ -335,7 +335,7 @@ export default {
             },
             alpha: 90,
             theta: 30,
-            iterCount: 5,
+            iterations: 5,
             step: 7
         }
     },
@@ -350,7 +350,7 @@ export default {
             },
             alpha: 0,
             theta: 90,
-            iterCount: 6,
+            iterations: 6,
             step: 7
         },
 
@@ -363,7 +363,7 @@ export default {
             },
             alpha: 0,
             theta: 60,
-            iterCount: 4,
+            iterations: 4,
             step: 8
         },
 
@@ -374,7 +374,7 @@ export default {
             },
             alpha: 45,
             theta: 90,
-            iterCount: 4,
+            iterations: 4,
             step: 8
         },
 
@@ -386,7 +386,7 @@ export default {
             },
             alpha: 45,
             theta: 90,
-            iterCount: 4,
+            iterations: 4,
             step: 8
         },
 
@@ -397,7 +397,7 @@ export default {
             },
             alpha: 0,
             theta: 90,
-            iterCount: 4,
+            iterations: 4,
             step: 3.5
         },
 
@@ -409,7 +409,7 @@ export default {
             },
             alpha: 0,
             theta: 90,
-            iterCount: 5,
+            iterations: 5,
             step: 4.5
         },
 
@@ -420,7 +420,7 @@ export default {
             },
             alpha: 0,
             theta: 90,
-            iterCount: 3,
+            iterations: 3,
             step: 4
         },
 
@@ -431,7 +431,7 @@ export default {
             },
             alpha: 0,
             theta: 60,
-            iterCount: 4,
+            iterations: 4,
             step: 5
         },
 
@@ -442,7 +442,7 @@ export default {
             },
             alpha: 0,
             theta: 90,
-            iterCount: 4,
+            iterations: 4,
             step: 3.5
         },
 
@@ -454,7 +454,7 @@ export default {
             },
             alpha: 0,
             theta: 90,
-            iterCount: 3,
+            iterations: 3,
             step: 4
         },
 
@@ -466,7 +466,7 @@ export default {
             },
             alpha: 0,
             theta: 90,
-            iterCount: 3,
+            iterations: 3,
             step: 4
         },
 
@@ -478,7 +478,7 @@ export default {
             },
             alpha: 180,
             theta: 90,
-            iterCount: 4,
+            iterations: 4,
             step: 3.5
         },
 
@@ -490,7 +490,7 @@ export default {
             },
             alpha: 0,
             theta: 45,
-            iterCount: 5,
+            iterations: 5,
             step: 10
         },
 
@@ -504,7 +504,7 @@ export default {
             },
             alpha: 0,
             theta: 60,
-            iterCount: 7,
+            iterations: 7,
             step: 15
         },
 
@@ -520,7 +520,7 @@ export default {
             },
             alpha: 36,
             theta: 36,
-            iterCount: 7,
+            iterations: 7,
             step: 15
         },
 
@@ -533,7 +533,7 @@ export default {
             },
             alpha: 0,
             theta: 45,
-            iterCount: 10,
+            iterations: 10,
             step: 5
         },
 
@@ -548,7 +548,7 @@ export default {
             },
             alpha: 180,
             theta: 30,
-            iterCount: 7,
+            iterations: 7,
             step: 4.5
         },
 
@@ -561,7 +561,7 @@ export default {
             },
             alpha: 0,
             theta: 45,
-            iterCount: 5,
+            iterations: 5,
             step: 3.5
         },
 
@@ -573,7 +573,7 @@ export default {
             },
             alpha: 0,
             theta: 30,
-            iterCount: 4,
+            iterations: 4,
             step: 5
         }
     },
@@ -588,7 +588,7 @@ export default {
             },
             alpha: 0,
             theta: 60,
-            iterCount: 5,
+            iterations: 5,
             step: 7
         },
 
@@ -600,7 +600,7 @@ export default {
             },
             alpha: 0,
             theta: 90,
-            iterCount: 2,
+            iterations: 2,
             step: 7
         },
 
@@ -611,7 +611,7 @@ export default {
             },
             alpha: 0,
             theta: 60,
-            iterCount: 3,
+            iterations: 3,
             step: 2
         },
 
@@ -622,7 +622,7 @@ export default {
             },
             alpha: 0,
             theta: 90,
-            iterCount: 4,
+            iterations: 4,
             step: 5
         },
 
@@ -633,7 +633,7 @@ export default {
             },
             alpha: 0,
             theta: 72,
-            iterCount: 4,
+            iterations: 4,
             step: 5
         },
 
@@ -644,7 +644,7 @@ export default {
             },
             alpha: 0,
             theta: 90,
-            iterCount: 4,
+            iterations: 4,
             step: 5
         },
 
@@ -655,7 +655,7 @@ export default {
             },
             alpha: 0,
             theta: 40,
-            iterCount: 4,
+            iterations: 4,
             step: 18
         },
 
@@ -666,7 +666,7 @@ export default {
             },
             alpha: 0,
             theta: 45,
-            iterCount: 5,
+            iterations: 5,
             step: 1.3
         },
 
@@ -677,7 +677,7 @@ export default {
             },
             alpha: 0,
             theta: 30,
-            iterCount: 4,
+            iterations: 4,
             step: 4.5
         },
 
@@ -688,7 +688,7 @@ export default {
             },
             alpha: 180,
             theta: 45,
-            iterCount: 14,
+            iterations: 14,
             step: 1.9
         },
 
@@ -699,7 +699,7 @@ export default {
             },
             alpha: 180,
             theta: 45,
-            iterCount: 14,
+            iterations: 14,
             step: 1.8
         },
 
@@ -713,7 +713,7 @@ export default {
             },
             alpha: 0,
             theta: 15,
-            iterCount: 5,
+            iterations: 5,
             step: 10
         },
 
@@ -727,7 +727,7 @@ export default {
             },
             alpha: 270,
             theta: 36,
-            iterCount: 6,
+            iterations: 6,
             step: 11
         },
 
@@ -741,7 +741,7 @@ export default {
             },
             alpha: 0,
             theta: 36,
-            iterCount: 5,
+            iterations: 5,
             step: 20
         },
 
@@ -753,7 +753,7 @@ export default {
             },
             alpha: 0,
             theta: 45,
-            iterCount: 9,
+            iterations: 9,
             step: 1
         },
 
@@ -766,7 +766,7 @@ export default {
             },
             alpha: 0,
             theta: 5,
-            iterCount: 8,
+            iterations: 8,
             step: 2
         },
 
@@ -781,7 +781,7 @@ export default {
             },
             alpha: 0,
             theta: 60,
-            iterCount: 6,
+            iterations: 6,
             step: 4.75
         },
 
@@ -792,7 +792,7 @@ export default {
             },
             alpha: 0,
             theta: 60,
-            iterCount: 4,
+            iterations: 4,
             step: 3
         }
     },
@@ -807,7 +807,7 @@ export default {
             },
             alpha: 0,
             theta: 90,
-            iterCount: 12,
+            iterations: 12,
             step: 5
         },
 
@@ -818,7 +818,7 @@ export default {
             },
             alpha: 120,
             theta: 120,
-            iterCount: 8,
+            iterations: 8,
             step: 6
         },
 
@@ -831,7 +831,7 @@ export default {
             },
             alpha: 0,
             theta: 45,
-            iterCount: 12,
+            iterations: 12,
             step: 3
         }
     },
@@ -844,7 +844,7 @@ export default {
             },
             alpha: 0,
             theta: 20,
-            iterCount: 5,
+            iterations: 5,
             step: 15
         },
 
@@ -855,7 +855,7 @@ export default {
             },
             alpha: 180,
             theta: 8,
-            iterCount: 6,
+            iterations: 6,
             step: 2.9
         },
 
@@ -867,7 +867,7 @@ export default {
             },
             alpha: 0,
             theta: 10,
-            iterCount: 6,
+            iterations: 6,
             step: 4
         }
     }

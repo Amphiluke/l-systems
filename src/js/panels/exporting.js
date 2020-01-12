@@ -12,7 +12,7 @@ let exportCtrl = {
         }
         link += `al${(ls.alpha * 180 / Math.PI).toFixed(3)}~`;
         link += `th${(ls.theta * 180 / Math.PI).toFixed(3)}~`;
-        link += `it${ls.iterCount}~`;
+        link += `it${ls.iterations}~`;
         link += `st${ls.step}`;
         return link;
     },
@@ -37,7 +37,7 @@ let exportCtrl = {
                     ls.theta = value * Math.PI / 180;
                     break;
                 case "it":
-                    ls.iterCount = +value;
+                    ls.iterations = +value;
                     break;
                 case "st":
                     ls.step = +value;

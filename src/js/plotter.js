@@ -13,7 +13,7 @@ let plotter = {
             rules,
             alpha: ls.alpha,
             theta: ls.theta,
-            iterations: ls.iterCount,
+            iterations: ls.iterations,
             step: ls.step
         });
         let svg = dom.ui.get("svg");

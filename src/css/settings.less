@@ -59,3 +59,27 @@
         }
    }
 }
+
+.ls-panel-settings [data-error] {
+    input {
+        box-shadow:0 0 2px 1px #a00;
+    }
+    &:after {
+        background:#a00;
+        border-radius:3px;
+        box-sizing:border-box;
+        color:@color-gray-lighter;
+        content:attr(data-error);
+        display:none;
+        font-size:0.9em;
+        left:0;
+        padding:3px 10px;
+        position:absolute;
+        top:100%;
+        width:100%;
+        z-index:2;
+    }
+    &:focus-within:after {
+        display:block;
+    }
+}

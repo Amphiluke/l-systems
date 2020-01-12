@@ -119,21 +119,41 @@ let handlers = {
 
     clickPlot(e) {
         e.preventDefault();
+        ls.reset();
+        ls.axiom = dom.ui.get("axiom").value.toUpperCase();
+        ls.alpha = dom.ui.get("alpha").value * Math.PI / 180;
+        ls.theta = dom.ui.get("theta").value * Math.PI / 180;
+        ls.step = Number(dom.ui.get("step").value);
+        ls.iterations = Number(dom.ui.get("iterations").value);
         let ruleFields = [...rulesBlock.querySelectorAll("input[data-letter]")];
         let rules = new Map(ruleFields.map(field => [field.dataset.letter, field.value.toUpperCase()]));
+        ls.setRules(rules);
         try {
-            ls.reset();
-            ls.axiom = dom.ui.get("axiom").value.toUpperCase();
-            ls.alpha = dom.ui.get("alpha").value * Math.PI / 180;
-            ls.theta = dom.ui.get("theta").value * Math.PI / 180;
-            ls.step = Number(dom.ui.get("step").value);
-            ls.iterCount = Number(dom.ui.get("iterCount").value);
-            ls.setRules(rules);
-        } catch (ex) {
-            alert(ex.message);
-            return;
+            plotter.plot();
+        } catch (error) {
+            if (error.name === "LSError") {
+                handlers.putErrors(error.toJSON());
+                panel.querySelector("[data-error] input").focus();
+            } else {
+                console.error(error);
+            }
         }
-        plotter.plot();
+    },
+
+    putErrors(errors) {
+        Object.entries(errors).forEach(([key, message]) => {
+            if (typeof message === "object") {
+                handlers.putErrors(message);
+                return;
+            }
+            let field = dom.ui.get(key) || rulesBlock.querySelector(`input[data-letter="${key}"]`);
+            if (field) {
+                field.parentNode.setAttribute("data-error", message);
+                field.addEventListener("input", ({target: {parentNode}}) => {
+                    parentNode.removeAttribute("data-error");
+                }, {once: true});
+            }
+        });
     },
 
     syncLSystem() {
@@ -141,7 +161,9 @@ let handlers = {
         dom.ui.get("alpha").value = (ls.alpha * 180 / Math.PI).toFixed(3);
         dom.ui.get("theta").value = (ls.theta * 180 / Math.PI).toFixed(3);
         dom.ui.get("step").value = ls.step;
-        dom.ui.get("iterCount").value = ls.iterCount;
+        dom.ui.get("iterations").value = ls.iterations;
+        [...panel.querySelectorAll("[data-error]")]
+            .forEach(el => el.removeAttribute("data-error"));
         ruleCtrl.sync();
     }
 };
