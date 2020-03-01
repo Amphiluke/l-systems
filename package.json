@@ -25,16 +25,16 @@
   },
   "homepage": "https://amphiluke.github.io/l-systems/",
   "devDependencies": {
-    "@rollup/plugin-node-resolve": "^7.0.0",
+    "@rollup/plugin-node-resolve": "^7.1.1",
     "clean-css-cli": "^4.3.0",
-    "copyfiles": "^2.1.1",
+    "copyfiles": "^2.2.0",
     "eslint": "^6.8.0",
-    "less": "^3.10.3",
-    "rollup": "^1.29.0",
+    "less": "^3.11.1",
+    "rollup": "^1.32.0",
     "rollup-plugin-terser": "^5.2.0"
   },
   "dependencies": {
-    "lindsvg": "^1.1.0",
+    "lindsvg": "^1.2.1",
     "normalize.css": "^8.0.1"
   }
 }
