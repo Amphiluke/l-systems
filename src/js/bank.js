@@ -286,6 +286,19 @@ export default {
             step: 4
         },
 
+        "plant 6": {
+            axiom: "X",
+            rules: {
+                F: "FF",
+                X: "F-[[X]+Y]+F[+Y]-Y",
+                Y: "F+[[Y]-X]-F[-X]+X"
+            },
+            alpha: 90,
+            theta: 30,
+            iterations: 7,
+            step: 3
+        },
+
         dandelion: {
             axiom: "FF[-Y][Z][+Z]",
             rules: {
@@ -402,7 +415,7 @@ export default {
         },
 
         cross: {
-            axiom: "FX",
+            axiom: "X",
             rules: {
                 X: "FX+FX+FXFY-FY-",
                 Y: "+FX+FXFY-FY-FY"
@@ -565,8 +578,8 @@ export default {
             step: 3.5
         },
 
-        "Hex-7-b": { // [GT]
-            axiom: "FX",
+        "Hex-7-b": { // [GT*]
+            axiom: "X",
             rules: {
                 X: "-F++F-X-F--F+Y---F--F+Y+F++F-X+++F++F-X-F++F-X+++F--F+Y--",
                 Y: "+F++F-X-F--F+Y+F--F+Y---F--F+Y---F++F-X+++F++F-X+++F--F+Y"
@@ -717,8 +730,8 @@ export default {
             step: 10
         },
 
-        "Penrose mosaic": { // [HS]
-            axiom: "+WF--XF---YF--ZF",
+        "Penrose mosaic": { // [HS*]
+            axiom: "+W--X---Y--Z",
             rules: {
                 W: "YF++ZF----XF[-YF----WF]++",
                 X: "+YF--ZF[---WF--XF]+",
@@ -745,8 +758,8 @@ export default {
             step: 20
         },
 
-        "snowflake 2": { // [SE]
-            axiom: "F[X]F++F[X]F++F[X]F++F[X]F",
+        "snowflake 2": { // [SE*]
+            axiom: "[X]++[X]++[X]++[X]",
             rules: {
                 X: "[+Y][-Y][++Y][--Y]",
                 Y: "YF[X]YF"
@@ -760,7 +773,7 @@ export default {
         wheel: { // [SE*]
             axiom: "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
             rules: {
-                W: "F[X]+",
+                W: "[X]+",
                 X: "[+++++++++++++Y[X]]-------------Y[X]",
                 Y: "YFYF"
             },
@@ -869,6 +882,18 @@ export default {
             theta: 10,
             iterations: 6,
             step: 4
+        },
+
+        "rack-wheel": {
+            axiom: "A+A",
+            rules: {
+                A: "F++++++F",
+                F: "A----------------A"
+            },
+            alpha: 0,
+            theta: 10,
+            iterations: 9,
+            step: 60
         }
     }
 };
