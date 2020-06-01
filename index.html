@@ -12,6 +12,34 @@
     <meta property="og:title" content="L-systems">
     <meta property="og:image" content="https://amphiluke.github.io/l-systems/img/preview.png">
     <meta property="og:description" content="Simple SVG-based L-system generator and manager">
+    <style>
+        .maintenance-note {
+            background: #454545;
+            border-radius: 4px;
+            box-shadow: 0 11px 13px -7px #888;
+            box-sizing: border-box;
+            color: #fff;
+            padding: 10px 30px 10px 10px;
+            position: fixed;
+            right: 10px;
+            top: 10px;
+            width: 300px;
+        }
+        .maintenance-note a {
+            color: inherit;
+        }
+        .maintenance-note-close {
+            align-items: center;
+            cursor: pointer;
+            display: flex;
+            height: 30px;
+            justify-content: center;
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 30px;
+        }
+    </style>
 </head>
 <body>
 
@@ -130,6 +158,11 @@
             © 2012–2020
         </footer>
     </section>
+
+    <aside id="maintenance-note" class="maintenance-note">
+        This app is superseded by the <a href="https://amphiluke.github.io/lindsvg/">lindsvg demo web app</a> and is no longer maintained. Please consider using the new app instead of this one.
+        <i class="maintenance-note-close" onclick="document.getElementById('maintenance-note').remove();">&times;</i>
+    </aside>
 
     <script type="module" src="js/index.js?v4.2.0"></script>
 </body>
